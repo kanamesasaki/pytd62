@@ -1,0 +1,92 @@
+body {
+    font-family: sans-serif;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+    line-height: 150%;
+    text-align: left;
+    background-color: white;
+    color: black;
+    padding: 0;
+    border: none;
+
+    margin: 0px 0px 0px 0px;
+    /* min-width: 740px; */
+}
+
+/* -- body styles ----------------------------------------------------------- */
+
+p {
+    margin: 0.8em 20px 0.5em 20px;
+}
+
+mjx-container {
+    text-align: left !important;
+    text-indent: 30px !important;
+}  
+
+a {
+    color: #CA7900;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #2491CF;
+}
+
+h1 {
+    margin: 0;
+    padding: 0.7em 20px 0.0em 20px;
+    font-size: 1.6em;
+    color: #11557C;
+}
+
+h2 {
+    margin: 1.7em 20px 0.2em 20px;
+    font-size: 1.35em;
+    padding: 0;
+}
+
+h3 {
+    margin: 1em 20px -0.3em 20px;
+    font-size: 1.2em;
+}
+
+pre code {
+    font-family: monospace;
+    background-color: #eee;
+    border: 1px solid #999;
+    display: block;
+    margin: 0 20px 0 20px;
+    padding: 10px 20px 10px 20px;
+}
+
+table {
+    border-collapse: collapse;
+    border-right-width: 0;
+    border-left-width: 0;
+    margin: 0 20px 0 20px;
+}
+
+th {
+    border-top-width: 1px;
+    border-bottom-style: double;
+    border-bottom-width: 2px;
+    border-right-width: 0;
+    border-left-width: 0;
+    padding: 0.2em 0.5em 0.2em 0.5em;
+}
+
+td{
+    border-width: 0 0;
+    padding: 0.15em 0.5em 0.15em 0.5em;
+}
+
+header {
+    background-color: #eee;
+    padding: 0.4em 20px 0.4em 20px;
+}
+
+footer {
+    background-color: #eee;
+    padding: 0.5em 20px 0.5em 20px;
+}
