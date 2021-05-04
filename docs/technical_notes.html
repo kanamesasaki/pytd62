@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>common</title>
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <header>
+    <a href="index.html">pytd62 documentation</a> &#187;
+    <a href="technical_notes.html">Technical notes</a>
+  </header>
+  <body>
+    <h1>Technical notes</h1>
+    <h2 id="basetrans">Setting origin and rotation of a FD element</h2>
+    <p>
+      In each FD element (except for polygons), the local origin and base vectors are defined inside .Basetrans (type: OpenTDv62.Matrix3d). 
+      OpenTDv62.Matrix3d offers several methods to set the origin and rotation, such as:
+    </p>
+    <ul>
+      <li>Matrix3d.SetOrigin(OpenTDv62.Point3d value)</li>
+      <li>Matrix3d.SetToRotation(OpenTDv62.Dimension.Dimensional[Angle] ang, OpenTDv62.Vector3d _axis, OpenTDv62.Point3d center) -> OpenTDv62.Matrix3d</li>
+      <li>Matrix3d.SetToRotX(OpenTDv62.Dimension.Dimensional[Angle] ang) -> OpenTDv62.Matrix3d</li>
+      <li>Matrix3d.SetToRotY(OpenTDv62.Dimension.Dimensional[Angle] ang) -> OpenTDv62.Matrix3d</li>
+      <li>Matrix3d.SetToRotZ(OpenTDv62.Dimension.Dimensional[Angle] ang) -> OpenTDv62.Matrix3d</li>
+    </ul>
+    <p>
+      However, it is also possible to directly set the Matrix3d.entry property, which might be more convenient for rotating the element multiple times.
+      'Matrix3d.entry' has a 4 &#215 4 matrix shape, but the last row is not used for specifying the base vectors and origin.
+      As shown in the figure below, each column corresponds to the X base vector, Y base vector, Z base vector and the origin coordinates.
+    </p>
+    <img src="images\basetrans.svg" width="500">
+    <p>
+      In order to set the base vectors, transposed rotation matrices can be used.
+      The equation below shows an example, how to rotate initial base vectors \((\boldsymbol{e}_{x~init},~\boldsymbol{e}_{y~init},~\boldsymbol{e}_{z~init})\) with ZYX Euler angles 
+      (which means firstly rotate around the Z axis, secondly rotate around the local Y axis and thirdly rotate around the local X axis) and acquire the new base vectors \((\boldsymbol{e}_{x~new},~\boldsymbol{e}_{y~new},~\boldsymbol{e}_{z~new})\). 
+    </p>
+    $$
+    \left( \begin{array}{ccc}
+    \boldsymbol{e}_{x~new}^T \\
+    \boldsymbol{e}_{y~new}^T \\
+    \boldsymbol{e}_{z~new}^T
+    \end{array} \right) = 
+    \left( \begin{array}{ccc}
+    1.0 & 0.0 & 0.0 \\
+    0.0 & \cos \phi & \sin \phi \\
+    0.0 & -\sin \phi & \cos \phi
+    \end{array} \right)
+    \left( \begin{array}{ccc}
+    \cos \theta & 0.0 & -\sin \theta \\
+    0.0 & 1.0 & 0.0 \\
+    \sin \theta & 0.0 & \cos \theta
+    \end{array} \right)
+    \left( \begin{array}{ccc}
+    \cos \psi & \sin \psi & 0.0 \\
+    -\sin \psi & \cos \psi & 0.0 \\
+    0.0 & 0.0 & 1.0
+    \end{array} \right)
+    \left( \begin{array}{ccc}
+    \boldsymbol{e}_{x~init}^T \\
+    \boldsymbol{e}_{y~init}^T \\
+    \boldsymbol{e}_{z~init}^T
+    \end{array} \right)
+    $$
+    <p>
+      The acquired matrix corresponds to the 3 &#215 3 part of the 'Matrix3d.entry' in transposed form.
+      As the base vectors are initially aligned to the reference coordinate, the orientation of a element can be set by the following way (rectangle as an example):
+    </p>
+<pre><code>new_base = np.transpose(np.transpose(common.rotx(phi)) @ np.transpose(common.roty(theta)) @ np.transpose(common.rotz(psi)))
+rectangle = td.CreateRectangle()
+rectangle.BaseTrans.entry[0][0] = new_base[0,0]
+rectangle.BaseTrans.entry[1][0] = new_base[1,0]
+rectangle.BaseTrans.entry[2][0] = new_base[2,0]
+rectangle.BaseTrans.entry[0][1] = new_base[0,1]
+rectangle.BaseTrans.entry[1][1] = new_base[1,1]
+rectangle.BaseTrans.entry[2][1] = new_base[2,1]
+rectangle.BaseTrans.entry[0][2] = new_base[0,2]
+rectangle.BaseTrans.entry[1][2] = new_base[1,2]
+rectangle.BaseTrans.entry[2][2] = new_base[2,2]</code></pre>
+
+  </body>
+  <footer>
+    <a href="index.html">pytd62 documentation</a> &#187;
+    <a href="technical_notes.html">Technical notes</a>
+    <span style="float: right">Copyright 2021, Kaname Sasaki</span>
+  </footer>
+</html>

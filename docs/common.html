@@ -26,7 +26,7 @@
       <tr>
         <td>theta</th>
         <td>float</th>
-        <td>rotation angle around the X axis [rad]</th>
+        <td>Rotation angle around the X axis [rad]</th>
       </tr>
     </table>
     $$
@@ -49,7 +49,7 @@
       <tr>
         <td>theta</th>
         <td>float</th>
-        <td>rotation angle around the Y axis [rad]</th>
+        <td>Rotation angle around the Y axis [rad]</th>
       </tr>
     </table>
     $$
@@ -72,7 +72,7 @@
       <tr>
         <td>theta</th>
         <td>float</th>
-        <td>rotation angle around the Z axis [rad]</th>
+        <td>Rotation angle around the Z axis [rad]</th>
       </tr>
     </table>
     $$
@@ -83,67 +83,6 @@
     0.0 & 0.0 & 1.0
     \end{array} \right)
     $$
-    <h2 id="rotzyx">rotzyx</h2>
-    <p>common.rotzyx(psi: float, theta: float, phi: float) -> numpy.ndarray</p>
-    <table border="1">
-      <tr>
-        <th>parameter</th>
-        <th>type</th>
-        <th>description</th>
-      </tr>
-      <tr>
-        <td>phi</th>
-        <td>float</th>
-        <td>rotation angle around the X axis [rad]</th>
-      </tr>
-      <tr>
-        <td>theta</th>
-        <td>float</th>
-        <td>rotation angle around the Y axis [rad]</th>
-      </tr>
-      <tr>
-        <td>psi</th>
-        <td>float</th>
-        <td>rotation angle around the Z axis [rad]</th>
-      </tr>
-    </table>
-    <p>returns 3D-rotation matrix based on ZYX Euler angles as a numpy.ndarray. The angular parameters are in radian.</p>
-    $$
-    \mathrm{rotzyx}(\psi,\theta,\phi) =
-    \left( \begin{array}{ccc}
-    1.0 & 0.0 & 0.0 \\
-    0.0 & \cos \phi & -\sin \phi \\
-    0.0 & \sin \phi & \cos \phi
-    \end{array} \right)
-    \left( \begin{array}{ccc}
-    \cos \theta & 0.0 & \sin \theta \\
-    0.0 & 1.0 & 0.0 \\
-    -\sin \theta & 0.0 & \cos \theta
-    \end{array} \right)
-    \left( \begin{array}{ccc}
-    \cos \psi & -\sin \psi & 0.0 \\
-    \sin \psi & \cos \psi & 0.0 \\
-    0.0 & 0.0 & 1.0
-    \end{array} \right)
-    $$
-    <p>
-      In each FD element (except for polygons), the local origin and base vectors are defined inside .Basetrans (type: OpenTDv62.Matrix3d). 
-      OpenTDv62.Matrix3d offers several methods to set the origin and rotation. However, it is also possible to directly set the Matrix3d.entry property. 
-      In Matrix3d.entry, 0–2nd columns are the base vectors and 3rd column is the origin. 
-      The calculated matrix with this function can be used to specify the base vectors as show in the example below:
-    </p>
-
-<pre><code>new_base = common.rotzyx(psi, theta, phi)
-rectangle = td.CreateRectangle()
-rectangle.BaseTrans.entry[0][0] = new_base[0,0]
-rectangle.BaseTrans.entry[1][0] = new_base[1,0]
-rectangle.BaseTrans.entry[2][0] = new_base[2,0]
-rectangle.BaseTrans.entry[0][1] = new_base[0,1]
-rectangle.BaseTrans.entry[1][1] = new_base[1,1]
-rectangle.BaseTrans.entry[2][1] = new_base[2,1]
-rectangle.BaseTrans.entry[0][2] = new_base[0,2]
-rectangle.BaseTrans.entry[1][2] = new_base[1,2]
-rectangle.BaseTrans.entry[2][2] = new_base[2,2]</code></pre>
 
     <h2 id="get_number_of_nodes">get_number_of_nodes</h2>
     <p>common.get_number_of_nodes(td: OpenTDv62.ThermalDesktop, submodel_name: str='') -> int</p>
@@ -161,7 +100,7 @@ rectangle.BaseTrans.entry[2][2] = new_base[2,2]</code></pre>
       <tr>
         <td>submodel_name = ''</th>
         <td>str</th>
-        <td>name of the submodel</th>
+        <td>Name of the submodel</th>
       </tr>
     </table>
     <p>By default, the function returns the number of nodes of the entire model. If 'submodel_name' is given, it returns the number of nodes of the specified submodel.</p>
@@ -319,34 +258,34 @@ rectangle.BaseTrans.entry[2][2] = new_base[2,2]</code></pre>
         <td>view = ''</th>
         <td>str</th>
         <td>
-          By default, the screen shot will be taken without changing the perspective. <br>
-          Available perspectives: ‘SW’, ‘SE’, ‘NE’, ‘NW’, ‘TOP’, ‘BOTTOM’, ‘FRONT’, ‘BACK’, ‘LEFT’, ‘RIGHT’
+          Available perspectives: ‘SW’, ‘SE’, ‘NE’, ‘NW’, ‘TOP’, ‘BOTTOM’, ‘FRONT’, ‘BACK’, ‘LEFT’, ‘RIGHT’.
+          If the given parameter does not match with the available perspectives, the current perspective on the screen will be used for the screenshot.
         </th>
       </tr>
       <tr>
         <td>style = ''</th>
         <td>str</th>
         <td>
-          Available model styles: ‘WIRE_2D’, ‘WIRE’, ‘CONCEPTUAL’, ‘HIDDEN’, ‘REALISTIC’, ‘SHADED’, ‘SHADED_W_EDGES’, ‘SHADES_OF_GREY’, ‘SKETCHY’, ‘THERMAL’, ‘THERMAL_PP’, ‘XRAY’.</th>
+          Available model styles: ‘WIRE_2D’, ‘WIRE’, ‘CONCEPTUAL’, ‘HIDDEN’, ‘REALISTIC’, ‘SHADED’, ‘SHADED_W_EDGES’, ‘SHADES_OF_GREY’, ‘SKETCHY’, ‘THERMAL’, ‘THERMAL_PP’, ‘XRAY’.
+          If the given parameter does not match with the available model styles, the current model style on the screen will be used for the screenshot. 
+        </th>
       </tr>
       <tr>
         <td>imageformat</th>
         <td>str</th>
-        <td>By default, a png format image will be created. <br>
-          Available image format: ‘bmp’, ‘emf’, ‘exif’, ‘gif’, ‘icon’, ‘jpeg’, ‘png’, ‘tiff’, ‘wmf’. </th>
+        <td>Available image format: ‘bmp’, ‘emf’, ‘exif’, ‘gif’, ‘icon’, ‘jpeg’, ‘png’, ‘tiff’, ‘wmf’. If the given parameter does not match with the available format, a png image will be generated as default.</th>
       </tr>
       <tr>
         <td>width = 0</th>
         <td>int</th>
-        <td>Width pixel for trimming</th>
+        <td>Width pixel for trimming. If this parameter is larger than 0 and smaller than the original screenshot width, then the image is trimmed to the specified width. The default value is 0, which means no trimming.</th>
       </tr>
       <tr>
         <td>height = 0</th>
         <td>int</th>
-        <td>Height pixel for trimming</th>
+        <td>Height pixel for trimming. If this parameter is larger than 0 and smaller than the original screenshot height, then the image is trimmed to the specified height. The default value is 0, which means no trimming.</th>
       </tr>
     </table>
-    <p>If ‘width’ and/or ‘height’ is smaller than the original screenshot, the image is trimmed (not scaled) to the specified size. The reference point for the trimming is the center of the original screenshot.</p>
   </body>
   <footer>
     <a href="index.html">pytd62 documentation</a> &#187;
