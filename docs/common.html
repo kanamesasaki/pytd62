@@ -125,8 +125,11 @@
       </tr>
     </table>
 
-    <h2 id="get_number_of_nodes">get_number_of_nodes</h2>
-    <p>common.get_number_of_nodes(td: OpenTDv62.ThermalDesktop, submodel_name: str='') -> int</p>
+    <h2 id="get_number_of_nodes">get_number_of_nodes(td: OpenTDv62.ThermalDesktop, submodel_name: str='') -> int</h2>
+    <p>
+      This function returns the number of nodes. By default, it returns the number of nodes of the entire model. 
+      If 'submodel_name' is given, it returns the number of nodes of the specified submodel.
+    </p>
     <table border="1">
       <tr>
         <th>parameter</th>
@@ -144,31 +147,9 @@
         <td>Name of the submodel</th>
       </tr>
     </table>
-    <p>By default, the function returns the number of nodes of the entire model. If 'submodel_name' is given, it returns the number of nodes of the specified submodel.</p>
 
-    <h2 id="get_submodel_nodes">get_submodel_nodes</h2>
-    <p>common.get_submodel_nodes(td: OpenTDv62.ThermalDesktop, submodel_name: str) -> list</p>
-    <table border="1">
-      <tr>
-        <th>parameter</th>
-        <th>type</th>
-        <th>description</th>
-      </tr>
-      <tr>
-        <td>td</th>
-        <td>OpenTDv62.ThermalDesktop</th>
-        <td>Thermal Desktop instance</th>
-      </tr>
-      <tr>
-        <td>submodel_name</th>
-        <td>str</th>
-        <td>Name of the submodel</th>
-      </tr>
-    </table>
-    <p>The function returns the specified submodel node instances as a list.</p>
-
-    <h2 id="renumber_submodel_nodes">renumber_submodel_nodes</h2>
-    <p>common.renumber_submodel_nodes(td: OpenTDv62.ThermalDesktop, submodel_name: str)</p>
+    <h2 id="get_submodel_nodes">get_submodel_nodes(td: OpenTDv62.ThermalDesktop, submodel_name: str) -> list</h2>
+    <p>This function returns the specified submodel node instances as a list.</p>
     <table border="1">
       <tr>
         <th>parameter</th>
@@ -187,8 +168,28 @@
       </tr>
     </table>
 
-    <h2 id="merge_submodel_nodes">merge_submodel_nodes</h2>
-    <p>common.merge_submodel_nodes(td: OpenTDv62.ThermalDesktop, submodel_name: str, tolerance: float=0.1e-3)</p>
+    <h2 id="renumber_submodel_nodes">renumber_submodel_nodes(td: OpenTDv62.ThermalDesktop, submodel_name: str)</h2>
+    <p>This function performs renumbering of the node IDs within the specified submodel.</p>
+    <table border="1">
+      <tr>
+        <th>parameter</th>
+        <th>type</th>
+        <th>description</th>
+      </tr>
+      <tr>
+        <td>td</th>
+        <td>OpenTDv62.ThermalDesktop</th>
+        <td>Thermal Desktop instance</th>
+      </tr>
+      <tr>
+        <td>submodel_name</th>
+        <td>str</th>
+        <td>Name of the submodel</th>
+      </tr>
+    </table>
+
+    <h2 id="merge_submodel_nodes">merge_submodel_nodes(td: OpenTDv62.ThermalDesktop, submodel_name: str, tolerance: float=0.1e-3)</h2>
+    <p>With this function, nodes which are closer than 'tolerance' will be merged within the specified submodel.</p>
     <table border="1">
       <tr>
         <th>parameter</th>
@@ -211,26 +212,9 @@
         <td>Tolerance for merging nodes</th>
       </tr>
     </table>
-    <p>Within the specified submodel, nodes which are closer than 'tolerance' will be merged.</p>
 
-    <h2 id="delete_contactors">delete_contactors</h2>
-    <p>common.delete_contactors(td: OpenTDv62.ThermalDesktop)</p>
-    <table border="1">
-      <tr>
-        <th>parameter</th>
-        <th>type</th>
-        <th>description</th>
-      </tr>
-      <tr>
-        <td>td</th>
-        <td>OpenTDv62.ThermalDesktop</th>
-        <td>Thermal Desktop instance</th>
-      </tr>
-    </table>
+    <h2 id="delete_contactors">delete_contactors(td: OpenTDv62.ThermalDesktop)</h2>
     <p>All the contactors will be deleted.</p>
-
-    <h2 id="delete_conductors">delete_conductors</h2>
-    <p>common.delete_contactors(td: OpenTDv62.ThermalDesktop)</p>
     <table border="1">
       <tr>
         <th>parameter</th>
@@ -243,10 +227,9 @@
         <td>Thermal Desktop instance</th>
       </tr>
     </table>
+
+    <h2 id="delete_conductors">delete_contactors(td: OpenTDv62.ThermalDesktop)</h2>
     <p>All the conductors will be deleted.</p>
-
-    <h2 id="delete_heaters">delete_heaters</h2>
-    <p>common.delete_heaters(td: OpenTDv62.ThermalDesktop)</p>
     <table border="1">
       <tr>
         <th>parameter</th>
@@ -259,10 +242,9 @@
         <td>Thermal Desktop instance</th>
       </tr>
     </table>
+
+    <h2 id="delete_heaters">delete_heaters(td: OpenTDv62.ThermalDesktop)</h2>
     <p>All the heaters will be deleted.</p>
-
-    <h2 id="delete_heatloads">delete_heatloads</h2>
-    <p>common.delete_heatloads(td: OpenTDv62.ThermalDesktop)</p>
     <table border="1">
       <tr>
         <th>parameter</th>
@@ -275,10 +257,24 @@
         <td>Thermal Desktop instance</th>
       </tr>
     </table>
-    <p>All the heatloads will be deleted.</p>
 
-    <h2 id="screenshot">screenshot</h2>
-    <p>common.screenshot(td: OpenTDv62.ThermalDesktop, name: str, view: str='', style: str='XRAY', imageformat: str='png', width: int=0, height: int=0)</p>
+    <h2 id="delete_heatloads">delete_heatloads(td: OpenTDv62.ThermalDesktop)</h2>
+    <p>All the heatloads will be deleted.</p>
+    <table border="1">
+      <tr>
+        <th>parameter</th>
+        <th>type</th>
+        <th>description</th>
+      </tr>
+      <tr>
+        <td>td</th>
+        <td>OpenTDv62.ThermalDesktop</th>
+        <td>Thermal Desktop instance</th>
+      </tr>
+    </table>
+
+    <h2 id="screenshot">screenshot(td: OpenTDv62.ThermalDesktop, name: str, view: str='', style: str='XRAY', imageformat: str='png', width: int=0, height: int=0)</h2>
+    <p>With this function, a screenshot can be taken with the specified perspective, style, image format, and size.</p>
     <table border="1">
       <tr>
         <th>parameter</th>
