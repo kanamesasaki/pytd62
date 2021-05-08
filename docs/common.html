@@ -15,8 +15,8 @@
   <body>
     <h1>common</h1>
 
-    <h2 id="rotx">rotx</h2>
-    <p>common.rotx(theta: float) -&gt; numpy.ndarray</p>
+    <h2 id="rotx">rotx(theta: float) -&gt; numpy.ndarray</h2>
+    <p>This function returns a rotation matrix around the X axis.</p>
     <table border="1">
       <tr>
         <th>parameter</th>
@@ -38,8 +38,8 @@
     \end{array} \right)
     $$
 
-    <h2 id="roty">roty</h2>
-    <p>common.roty(theta: float) -&gt; numpy.ndarray</p>
+    <h2 id="roty">roty(theta: float) -&gt; numpy.ndarray</h2>
+    <p>This function returns a rotation matrix around the Y axis.</p>
     <table border="1">
       <tr>
         <th>parameter</th>
@@ -61,8 +61,8 @@
     \end{array} \right)
     $$
 
-    <h2 id="rotz">rotz</h2>
-    <p>common.rotz(theta: float) -&gt; numpy.ndarray</p>
+    <h2 id="rotz">rotz(theta: float) -&gt; numpy.ndarray</h2>
+    <p>This function returns a rotation matrix around the Z axis.</p>
     <table border="1">
       <tr>
         <th>parameter</th>
@@ -83,6 +83,47 @@
     0.0 & 0.0 & 1.0
     \end{array} \right)
     $$
+
+    <h2 id="rotate_base_euler">rotate_base_euler(ang1, ang2, ang3, order='ZYX', base=numpy.eye(3)) -&gt numpy.ndarray</h2>
+    <p>This function converts the base vectors by the Euler angles, and returns the converted base vectors as a 3 &#215 3 numpy.ndarray.</p>
+    <table border="1">
+      <tr>
+        <th>parameter</th>
+        <th>type</th>
+        <th>description</th>
+      </tr>
+      <tr>
+        <td>ang1</th>
+        <td>float</th>
+        <td>First rotation angle [rad]</th>
+      </tr>
+      <tr>
+        <td>ang2</th>
+        <td>float</th>
+        <td>Second rotation angle [rad]</th>
+      </tr>
+      <tr>
+        <td>ang3</th>
+        <td>float</th>
+        <td>Third rotation angle [rad]</th>
+      </tr>
+      <tr>
+        <td>order = 'ZYX'</th>
+        <td>str</th>
+        <td>
+          The order of rotations. By default, 'ZYX' (which means firstly rotate around the Z axis, secondly rotate around the local Y axis and thirdly rotate around the local X axis) is selected. <br>
+          The following 12 cases available (there are 3 &#215 3 &#215 3 combinations, but rotating two/three times in the same direction in series does not make sense): 
+          'XYX', 'XYZ', 'XZX', 'XZY',
+          'YXY', 'YXZ', 'YZX', 'YZY',
+          'ZXY', 'ZXZ', 'ZYX', 'ZYZ'.
+        </th>
+        <tr>
+          <td>base=numpy.eye(3)</th>
+          <td>numpy.ndarray</th>
+          <td>The original base vectors. X axis is the first colum, Y axis is the second column, and Z axis is the third column. The default value is a 3 &#215 3 unit matrix.</th>
+        </tr>
+      </tr>
+    </table>
 
     <h2 id="get_number_of_nodes">get_number_of_nodes</h2>
     <p>common.get_number_of_nodes(td: OpenTDv62.ThermalDesktop, submodel_name: str='') -> int</p>
@@ -289,7 +330,7 @@
   </body>
   <footer>
     <a href="index.html">pytd62 documentation</a> &#187;
-    <a href="surface.html">surface</a>
+    <a href="common.html">common</a>
     <span style="float: right">Copyright 2021, Kaname Sasaki</span>
   </footer>
 </html>
