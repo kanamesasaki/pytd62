@@ -50,6 +50,11 @@
         <th>description</th>
       </tr>
       <tr>
+        <td>td</td>
+        <td>OpenTDv62.ThermalDesktop</td>
+        <td>Thermal Desktop instance</td>
+      </tr>
+      <tr>
         <td>data</th>
         <td>pandas.Series</th>
         <td>rectangle parameters in pandas.Series</th>
@@ -176,6 +181,11 @@
         <th>parameter</th>
         <th>type</th>
         <th>description</th>
+      </tr>
+      <tr>
+        <td>td</td>
+        <td>OpenTDv62.ThermalDesktop</td>
+        <td>Thermal Desktop instance</td>
       </tr>
       <tr>
         <td>data</th>
@@ -316,6 +326,11 @@
         <th>description</th>
       </tr>
       <tr>
+        <td>td</td>
+        <td>OpenTDv62.ThermalDesktop</td>
+        <td>Thermal Desktop instance</td>
+      </tr>
+      <tr>
         <td>data</th>
         <td>pandas.Series</th>
         <td>rectangle parameters in pandas.Series</th>
@@ -452,6 +467,11 @@
         <th>parameter</th>
         <th>type</th>
         <th>description</th>
+      </tr>
+      <tr>
+        <td>td</td>
+        <td>OpenTDv62.ThermalDesktop</td>
+        <td>Thermal Desktop instance</td>
       </tr>
       <tr>
         <td>data</th>
@@ -595,6 +615,11 @@
         <th>parameter</th>
         <th>type</th>
         <th>description</th>
+      </tr>
+      <tr>
+        <td>td</td>
+        <td>OpenTDv62.ThermalDesktop</td>
+        <td>Thermal Desktop instance</td>
       </tr>
       <tr>
         <td>data</th>
@@ -745,6 +770,11 @@
         <th>description</th>
       </tr>
       <tr>
+        <td>td</td>
+        <td>OpenTDv62.ThermalDesktop</td>
+        <td>Thermal Desktop instance</td>
+      </tr>
+      <tr>
         <td>data</th>
         <td>pandas.Series</th>
         <td>rectangle parameters in pandas.Series</th>
@@ -879,6 +909,154 @@
       </tr>
     </table>
     <img src="images\scarfedcylinder.svg" width="500">
+
+    <h2 id="create_sphere">create_sphere(td: OpenTDv62.ThermalDesktop, data: pandas.Series)</h2>
+    <table border="1">
+      <tr>
+        <th>parameter</th>
+        <th>type</th>
+        <th>description</th>
+      </tr>
+      <tr>
+        <td>td</td>
+        <td>OpenTDv62.ThermalDesktop</td>
+        <td>Thermal Desktop instance</td>
+      </tr>
+      <tr>
+        <td>data</th>
+        <td>pandas.Series</th>
+        <td>rectangle parameters in pandas.Series</th>
+      </tr>
+    </table>
+    <p>In 'data' (type: pandas.Series), the following parameters are specified.</p>
+    <table border="1">
+      <tr>
+        <th>keyword</th>
+        <th>type</th>
+        <th>description</th>
+      </tr>
+      <tr>
+        <td>Submodel name</th>
+        <td>str</th>
+        <td>name of the submodel</th>
+      </tr>
+      <tr>
+        <td>Start ID</th>
+        <td>int</th>
+        <td>starting node ID for this element</th>
+      </tr>
+      <tr>
+        <td>Breakdown U</th>
+        <td>int</th>
+        <td>number of divisions in X direction</th>
+      </tr>
+      <tr>
+        <td>Breakdown V</th>
+        <td>int</th>
+        <td>number of divisions in Y direction</th>
+      </tr>
+      <tr>
+        <td>Node positions</th>
+        <td>str</th>
+        <td>'EDGE' or 'CENTERED'</th>
+      </tr>
+      <tr>
+        <td>Radius [mm]</th>
+        <td>float</th>
+        <td>radius of the cylinder</th>
+      </tr>
+      <tr>
+        <td>Min height [mm]</th>
+        <td>float</th>
+        <td>Min Z coordinate of the sphere in the local coordinates</th>
+      </tr>
+      <tr>
+        <td>Max height [mm]</th>
+        <td>float</th>
+        <td>Max Z coordinate of the sphere in the local coordinates</th>
+      </tr>
+      <tr>
+        <td>Thickness [mm]</th>
+        <td>float</th>
+        <td>thickness of the surface</th>
+      </tr>
+      <tr>
+        <td>Start angle [deg]</th>
+        <td>float</th>
+        <td>start angle of the sphere in the azimuth direction</th>
+      </tr>
+      <tr>
+        <td>End angle [deg]</th>
+        <td>float</th>
+        <td>end angle of the sphere in the azimuth direction</th>
+      </tr>
+      <tr>
+        <td>X [mm]</th>
+        <td>float</th>
+        <td>X coordinate of the element origin</th>
+      </tr>
+      <tr>
+        <td>Y [mm]</th>
+        <td>float</th>
+        <td>Y coordinate of the element origin</th>
+      </tr>
+      <tr>
+        <td>Z [mm]</th>
+        <td>float</th>
+        <td>Z coordinate of the element origin</th>
+      </tr>
+      <tr>
+        <td>rot X [deg]</th>
+        <td>float</th>
+        <td>X roation angle of the ZYX Euler angles</th>
+      </tr>
+      <tr>
+        <td>rot Y [deg]</th>
+        <td>float</th>
+        <td>Y roation angle of the ZYX Euler angles</th>
+      </tr>
+      <tr>
+        <td>rot Z [deg]</th>
+        <td>float</th>
+        <td>Z roation angle of the ZYX Euler angles</th>
+      </tr>
+      <tr>
+        <td>Top optical property</th>
+        <td>str</th>
+        <td>name of the top side optical property</th>
+      </tr>
+      <tr>
+        <td>Bottom optical property</th>
+        <td>str</th>
+        <td>name of the bottom side optical property</th>
+      </tr>
+      <tr>
+        <td>Material</th>
+        <td>str</th>
+        <td>name of the bulk material</th>
+      </tr>
+      <tr>
+        <td>Top analysis group</th>
+        <td>str</th>
+        <td>name of the top side analysis group</th>
+      </tr>
+      <tr>
+        <td>Bottom analysis group</th>
+        <td>str</th>
+        <td>name of the bottom side analysis group</th>
+      </tr>
+      <tr>
+        <td>Color</th>
+        <td>int</th>
+        <td>color code</th>
+      </tr>
+      <tr>
+        <td>Comment</th>
+        <td>str</th>
+        <td>unique comment within the submodel for specifying the element</th>
+      </tr>
+    </table>
+    <img src="images\sphere.svg" width="500">
 
   </body>
   <footer>
