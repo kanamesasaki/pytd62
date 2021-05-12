@@ -23,42 +23,63 @@
   </header>
   <body>
     <h1>solid</h1>
-    <h2 id="solid_analysisgroup">solid_analysisgroup(xgmin: str, xgmax: str, yrmin: str, yrmax: str, zhmin: str, zhmax: str) -> System.Collections.Generic.Dictionary</h2>
+    <h2 id="solid_analysisgroup">solid_analysisgroup(s0: str, s1: str, s2: str, s3: str, s4: str, s5: str) -> System.Collections.Generic.Dictionary</h2>
     <table border="1">
       <tr>
         <th>parameter</th>
         <th>type</th>
-        <th>description</th>
+        <th>SolidBrick</th>
+        <th>SolidCylinder</th>
+        <th>SolidSphere</th>
+        <th>SolidCone</th>
       </tr>
       <tr>
-        <td>xgmin</th>
-        <td>str</th>
-        <td>analysis group name of the XMIN or GMIN surface</th>
+        <td>s0</td>
+        <td>str</td>
+        <td>XMIN surface</td>
+        <td>GMIN surface</td>
+        <td>GMIN surface</td>
+        <td>GMIN surface</td>
       </tr>
       <tr>
-        <td>xgmax</th>
-        <td>str</th>
-        <td>analysis group name of the XMAX or GMAX surface</th>
+        <td>s1</td>
+        <td>str</td>
+        <td>XMAX surface</td>
+        <td>GMAX surface</td>
+        <td>GMAX surface</td>
+        <td>GMAX surface</td>
       </tr>
       <tr>
-        <td>yrmin</th>
-        <td>str</th>
-        <td>analysis group name of the YMIN or RMIN surface</th>
+        <td>s2</td>
+        <td>str</td>
+        <td>YMIN surface</td>
+        <td>RMIN surface</td>
+        <td>RMIN surface</td>
+        <td>RMIN surface</td>
       </tr>
       <tr>
-        <td>yrmax</th>
-        <td>str</th>
-        <td>analysis group name of the YMAX or RMAX surface</th>
+        <td>s3</td>
+        <td>str</td>
+        <td>YMAX surface</td>
+        <td>RMAX surface</td>
+        <td>RMAX surface</td>
+        <td>RMAX surface</td>
       </tr>
       <tr>
-        <td>zhmin</th>
-        <td>str</th>
-        <td>analysis group name of the ZMIN or HMIN surface</th>
+        <td>s4</td>
+        <td>str</td>
+        <td>ZMIN surface</td>
+        <td>HMIN surface</td>
+        <td>BMIN surface</td>
+        <td>HMIN surface</td>
       </tr>
       <tr>
-        <td>zhmax</th>
-        <td>str</th>
-        <td>analysis group name of the ZMAX or HMAX surface</th>
+        <td>s5</td>
+        <td>str</td>
+        <td>ZMAX surface</td>
+        <td>HMAX surface</td>
+        <td>BMAX surface</td>
+        <td>HMAX surface</td>
       </tr>
     </table>
 
@@ -70,12 +91,17 @@
         <th>description</th>
       </tr>
       <tr>
-        <td>data</th>
-        <td>pandas.Series</th>
-        <td>solid parameters in pandas.Series</th>
+        <td>td</td>
+        <td>OpenTDv62.ThermalDesktop</td>
+        <td>Thermal Desktop instance</td>
+      </tr>
+      <tr>
+        <td>data</td>
+        <td>pandas.Series</td>
+        <td>Solid parameters in pandas.Series</td>
       </tr>
     </table>
-    <p>In 'data' (type: pandas.Series), the following parameters are specified.</p>
+    <p>In 'data' (type: pandas.Series), the following parameters shall be specified.</p>
     <table border="1">
       <tr>
         <th>keyword</th>
@@ -83,154 +109,154 @@
         <th>description</th>
       </tr>
       <tr>
-        <td>Submodel name</th>
-        <td>str</th>
-        <td>name of the submodel</th>
+        <td>Submodel name</td>
+        <td>str</td>
+        <td>name of the submodel</td>
       </tr>
       <tr>
-        <td>Start ID</th>
-        <td>int</th>
-        <td>starting node ID for this element</th>
+        <td>Start ID</td>
+        <td>int</td>
+        <td>starting node ID for this element</td>
       </tr>
       <tr>
-        <td>Breakdown U</th>
-        <td>int</th>
-        <td>number of divisions in X direction</th>
+        <td>Breakdown U</td>
+        <td>int</td>
+        <td>number of divisions in X direction</td>
       </tr>
       <tr>
-        <td>Breakdown V</th>
-        <td>int</th>
-        <td>number of divisions in Y direction</th>
+        <td>Breakdown V</td>
+        <td>int</td>
+        <td>number of divisions in Y direction</td>
       </tr>
       <tr>
-        <td>Breakdown W</th>
-        <td>int</th>
-        <td>number of divisions in Z direction</th>
+        <td>Breakdown W</td>
+        <td>int</td>
+        <td>number of divisions in Z direction</td>
       </tr>
       <tr>
-        <td>Node positions</th>
-        <td>str</th>
-        <td>'EDGE' or 'CENTERED'</th>
+        <td>Node positions</td>
+        <td>str</td>
+        <td>'EDGE' or 'CENTERED'</td>
       </tr>
       <tr>
-        <td>XMax [mm]</th>
-        <td>float</th>
-        <td>X side length of the rectangle</th>
+        <td>XMax [mm]</td>
+        <td>float</td>
+        <td>X side length of the rectangle</td>
       </tr>
       <tr>
-        <td>YMax [mm]</th>
-        <td>float</th>
-        <td>Y side length of the rectangle</th>
+        <td>YMax [mm]</td>
+        <td>float</td>
+        <td>Y side length of the rectangle</td>
       </tr>
       <tr>
-        <td>ZMax [mm]</th>
-        <td>float</th>
-        <td>Z side length of the rectangle</th>
+        <td>ZMax [mm]</td>
+        <td>float</td>
+        <td>Z side length of the rectangle</td>
       </tr>
       <tr>
-        <td>X [mm]</th>
-        <td>float</th>
-        <td>X coordinate of the element origin</th>
+        <td>X [mm]</td>
+        <td>float</td>
+        <td>X coordinate of the element origin</td>
       </tr>
       <tr>
-        <td>Y [mm]</th>
-        <td>float</th>
-        <td>Y coordinate of the element origin</th>
+        <td>Y [mm]</td>
+        <td>float</td>
+        <td>Y coordinate of the element origin</td>
       </tr>
       <tr>
-        <td>Z [mm]</th>
-        <td>float</th>
-        <td>Z coordinate of the element origin</th>
+        <td>Z [mm]</td>
+        <td>float</td>
+        <td>Z coordinate of the element origin</td>
       </tr>
       <tr>
-        <td>rot X [deg]</th>
-        <td>float</th>
-        <td>X roation angle of the ZYX Euler angles</th>
+        <td>rot X [deg]</td>
+        <td>float</td>
+        <td>X roation angle of the ZYX Euler angles</td>
       </tr>
       <tr>
-        <td>rot Y [deg]</th>
-        <td>float</th>
-        <td>Y roation angle of the ZYX Euler angles</th>
+        <td>rot Y [deg]</td>
+        <td>float</td>
+        <td>Y roation angle of the ZYX Euler angles</td>
       </tr>
       <tr>
-        <td>rot Z [deg]</th>
-        <td>float</th>
-        <td>Z roation angle of the ZYX Euler angles</th>
+        <td>rot Z [deg]</td>
+        <td>float</td>
+        <td>Z roation angle of the ZYX Euler angles</td>
       </tr>
       <tr>
-        <td>XMIN/GMIN optical</th>
-        <td>str</th>
-        <td>optical property name of the XMIN or GMIN surface</th>
+        <td>XMIN optical</td>
+        <td>str</td>
+        <td>optical property name of the XMIN surface</td>
       </tr>
       <tr>
-        <td>XMAX/GMAX optical</th>
-        <td>str</th>
-        <td>optical property name of the XMAX or GMAX surface</th>
+        <td>XMAX optical</td>
+        <td>str</td>
+        <td>optical property name of the XMAX surface</td>
       </tr>
       <tr>
-        <td>YMIN/RMIN optical</th>
-        <td>str</th>
-        <td>optical property name of the YMIN or RMIN surface</th>
+        <td>YMIN optical</td>
+        <td>str</td>
+        <td>optical property name of the YMIN surface</td>
       </tr>
       <tr>
-        <td>YMAX/RMAX optical</th>
-        <td>str</th>
-        <td>optical property name of the YMAX or RMAX surface</th>
+        <td>YMAX optical</td>
+        <td>str</td>
+        <td>optical property name of the YMAX surface</td>
       </tr>
       <tr>
-        <td>ZMIN/HMIN optical</th>
-        <td>str</th>
-        <td>optical property name of the ZMIN or HMIN surface</th>
+        <td>ZMIN optical</td>
+        <td>str</td>
+        <td>optical property name of the ZMIN surface</td>
       </tr>
       <tr>
-        <td>XMAX/GMAX optical</th>
-        <td>str</th>
-        <td>optical property name of the ZMIN or HMIN surface</th>
+        <td>ZMAX optical</td>
+        <td>str</td>
+        <td>optical property name of the ZMAX surface</td>
       </tr>
       <tr>
-        <td>Material</th>
-        <td>str</th>
-        <td>name of the bulk material</th>
+        <td>Material</td>
+        <td>str</td>
+        <td>name of the bulk material</td>
       </tr>
       <tr>
-        <td>XMIN/GMIN group</th>
-        <td>str</th>
-        <td>analysis group name of the XMIN or GMIN surface</th>
+        <td>XMIN group</td>
+        <td>str</td>
+        <td>analysis group name of the XMIN surface</td>
       </tr>
       <tr>
-        <td>XMAX/GMAX group</th>
-        <td>str</th>
-        <td>analysis group name of the XMAX or GMAX surface</th>
+        <td>XMAX group</td>
+        <td>str</td>
+        <td>analysis group name of the XMAX surface</td>
       </tr>
       <tr>
-        <td>YMIN/RMIN group</th>
-        <td>str</th>
-        <td>analysis group name of the YMIN or RMIN surface</th>
+        <td>YMIN group</td>
+        <td>str</td>
+        <td>analysis group name of the YMIN surface</td>
       </tr>
       <tr>
-        <td>YMAX/RMAX group</th>
-        <td>str</th>
-        <td>analysis group name of the YMAX or RMAX surface</th>
+        <td>YMAX group</td>
+        <td>str</td>
+        <td>analysis group name of the YMAX surface</td>
       </tr>
       <tr>
-        <td>ZMIN/HMIN group</th>
-        <td>str</th>
-        <td>analysis group name of the ZMIN or HMIN surface</th>
+        <td>ZMIN group</td>
+        <td>str</td>
+        <td>analysis group name of the ZMIN surface</td>
       </tr>
       <tr>
-        <td>ZMAX/HMAX group</th>
-        <td>str</th>
-        <td>analysis group name of the ZMAX or HMAX surface</th>
+        <td>ZMAX group</td>
+        <td>str</td>
+        <td>analysis group name of the ZMAX surface</td>
       </tr>
       <tr>
-        <td>Color</th>
-        <td>int</th>
-        <td>color code</th>
+        <td>Color</td>
+        <td>int</td>
+        <td>color code</td>
       </tr>
       <tr>
-        <td>Comment</th>
-        <td>str</th>
-        <td>unique comment within the submodel for specifying the element</th>
+        <td>Comment</td>
+        <td>str</td>
+        <td>unique comment within the submodel for specifying the element</td>
       </tr>
     </table>
     <img src="images\solidbrick.svg" width="500">
@@ -243,12 +269,17 @@
         <th>description</th>
       </tr>
       <tr>
-        <td>data</th>
-        <td>pandas.Series</th>
-        <td>rectangle parameters in pandas.Series</th>
+        <td>td</td>
+        <td>OpenTDv62.ThermalDesktop</td>
+        <td>Thermal Desktop instance</td>
+      </tr>
+      <tr>
+        <td>data</td>
+        <td>pandas.Series</td>
+        <td>rectangle parameters in pandas.Series</td>
       </tr>
     </table>
-    <p>In 'data' (type: pandas.Series), the following parameters are specified.</p>
+    <p>In 'data' (type: pandas.Series), the following parameters shall be specified.</p>
     <table border="1">
       <tr>
         <th>keyword</th>
@@ -256,167 +287,557 @@
         <th>description</th>
       </tr>
       <tr>
-        <td>Submodel name</th>
-        <td>str</th>
-        <td>name of the submodel</th>
+        <td>Submodel name</td>
+        <td>str</td>
+        <td>name of the submodel</td>
       </tr>
       <tr>
-        <td>Start ID</th>
-        <td>int</th>
-        <td>starting node ID for this element</th>
+        <td>Start ID</td>
+        <td>int</td>
+        <td>starting node ID for this element</td>
       </tr>
       <tr>
-        <td>Breakdown U</th>
-        <td>int</th>
-        <td>number of divisions in angular direction</th>
+        <td>Breakdown U</td>
+        <td>int</td>
+        <td>number of divisions in angular direction</td>
       </tr>
       <tr>
-        <td>Breakdown V</th>
-        <td>int</th>
-        <td>number of divisions in radial direction</th>
+        <td>Breakdown V</td>
+        <td>int</td>
+        <td>number of divisions in radial direction</td>
       </tr>
       <tr>
-        <td>Breakdown W</th>
-        <td>int</th>
-        <td>number of divisions in height direction</th>
+        <td>Breakdown W</td>
+        <td>int</td>
+        <td>number of divisions in height direction</td>
       </tr>
       <tr>
-        <td>Node positions</th>
-        <td>str</th>
-        <td>'EDGE' or 'CENTERED'</th>
+        <td>Node positions</td>
+        <td>str</td>
+        <td>'EDGE' or 'CENTERED'</td>
       </tr>
       <tr>
-        <td>Rmax [mm]</th>
-        <td>float</th>
-        <td>max radius of the solid cylinder</th>
+        <td>Rmax [mm]</td>
+        <td>float</td>
+        <td>max radius of the solid cylinder</td>
       </tr>
       <tr>
-        <td>Rmin [mm]</th>
-        <td>float</th>
-        <td>min radius of the solid cylinder</th>
+        <td>Rmin [mm]</td>
+        <td>float</td>
+        <td>min radius of the solid cylinder</td>
       </tr>
       <tr>
-        <td>Height [mm]</th>
-        <td>float</th>
-        <td>height of the cylinder</th>
+        <td>Height [mm]</td>
+        <td>float</td>
+        <td>height of the cylinder</td>
       </tr>
       <tr>
-        <td>Start angle [deg]</th>
-        <td>float</th>
-        <td>start angle of the cylinder</th>
+        <td>Start angle [deg]</td>
+        <td>float</td>
+        <td>start angle of the cylinder</td>
       </tr>
       <tr>
-        <td>End angle [deg]</th>
-        <td>float</th>
-        <td>end angle of the cylinder</th>
+        <td>End angle [deg]</td>
+        <td>float</td>
+        <td>end angle of the cylinder</td>
       </tr>
       <tr>
-        <td>X [mm]</th>
-        <td>float</th>
-        <td>X coordinate of the element origin</th>
+        <td>X [mm]</td>
+        <td>float</td>
+        <td>X coordinate of the element origin</td>
       </tr>
       <tr>
-        <td>Y [mm]</th>
-        <td>float</th>
-        <td>Y coordinate of the element origin</th>
+        <td>Y [mm]</td>
+        <td>float</td>
+        <td>Y coordinate of the element origin</td>
       </tr>
       <tr>
-        <td>Z [mm]</th>
-        <td>float</th>
-        <td>Z coordinate of the element origin</th>
+        <td>Z [mm]</td>
+        <td>float</td>
+        <td>Z coordinate of the element origin</td>
       </tr>
       <tr>
-        <td>rot X [deg]</th>
-        <td>float</th>
-        <td>X roation angle of the ZYX Euler angles</th>
+        <td>rot X [deg]</td>
+        <td>float</td>
+        <td>X roation angle of the ZYX Euler angles</td>
       </tr>
       <tr>
-        <td>rot Y [deg]</th>
-        <td>float</th>
-        <td>Y roation angle of the ZYX Euler angles</th>
+        <td>rot Y [deg]</td>
+        <td>float</td>
+        <td>Y roation angle of the ZYX Euler angles</td>
       </tr>
       <tr>
-        <td>rot Z [deg]</th>
-        <td>float</th>
-        <td>Z roation angle of the ZYX Euler angles</th>
+        <td>rot Z [deg]</td>
+        <td>float</td>
+        <td>Z roation angle of the ZYX Euler angles</td>
       </tr>
       <tr>
-        <td>XMIN/GMIN optical</th>
-        <td>str</th>
-        <td>optical property name of the XMIN or GMIN surface</th>
+        <td>GMIN optical</td>
+        <td>str</td>
+        <td>optical property name of the GMIN surface</td>
       </tr>
       <tr>
-        <td>XMAX/GMAX optical</th>
-        <td>str</th>
-        <td>optical property name of the XMAX or GMAX surface</th>
+        <td>GMAX optical</td>
+        <td>str</td>
+        <td>optical property name of the GMAX surface</td>
       </tr>
       <tr>
-        <td>YMIN/RMIN optical</th>
-        <td>str</th>
-        <td>optical property name of the YMIN or RMIN surface</th>
+        <td>RMIN optical</td>
+        <td>str</td>
+        <td>optical property name of the RMIN surface</td>
       </tr>
       <tr>
-        <td>YMAX/RMAX optical</th>
-        <td>str</th>
-        <td>optical property name of the YMAX or RMAX surface</th>
+        <td>RMAX optical</td>
+        <td>str</td>
+        <td>optical property name of the RMAX surface</td>
       </tr>
       <tr>
-        <td>ZMIN/HMIN optical</th>
-        <td>str</th>
-        <td>optical property name of the ZMIN or HMIN surface</th>
+        <td>HMIN optical</td>
+        <td>str</td>
+        <td>optical property name of the HMIN surface</td>
       </tr>
       <tr>
-        <td>XMAX/GMAX optical</th>
-        <td>str</th>
-        <td>optical property name of the ZMIN or HMIN surface</th>
+        <td>HMAX optical</td>
+        <td>str</td>
+        <td>optical property name of the HMAX surface</td>
       </tr>
       <tr>
-        <td>Material</th>
-        <td>str</th>
-        <td>name of the bulk material</th>
+        <td>Material</td>
+        <td>str</td>
+        <td>name of the bulk material</td>
       </tr>
       <tr>
-        <td>XMIN/GMIN group</th>
-        <td>str</th>
-        <td>analysis group name of the XMIN or GMIN surface</th>
+        <td>GMIN group</td>
+        <td>str</td>
+        <td>analysis group name of the GMIN surface</td>
       </tr>
       <tr>
-        <td>XMAX/GMAX group</th>
-        <td>str</th>
-        <td>analysis group name of the XMAX or GMAX surface</th>
+        <td>GMAX group</td>
+        <td>str</td>
+        <td>analysis group name of the GMAX surface</td>
       </tr>
       <tr>
-        <td>YMIN/RMIN group</th>
-        <td>str</th>
-        <td>analysis group name of the YMIN or RMIN surface</th>
+        <td>RMIN group</td>
+        <td>str</td>
+        <td>analysis group name of the RMIN surface</td>
       </tr>
       <tr>
-        <td>YMAX/RMAX group</th>
-        <td>str</th>
-        <td>analysis group name of the YMAX or RMAX surface</th>
+        <td>RMAX group</td>
+        <td>str</td>
+        <td>analysis group name of the RMAX surface</td>
       </tr>
       <tr>
-        <td>ZMIN/HMIN group</th>
-        <td>str</th>
-        <td>analysis group name of the ZMIN or HMIN surface</th>
+        <td>HMIN group</td>
+        <td>str</td>
+        <td>analysis group name of the HMIN surface</td>
       </tr>
       <tr>
-        <td>ZMAX/HMAX group</th>
-        <td>str</th>
-        <td>analysis group name of the ZMAX or HMAX surface</th>
+        <td>HMAX group</td>
+        <td>str</td>
+        <td>analysis group name of the HMAX surface</td>
       </tr>
       <tr>
-        <td>Color</th>
-        <td>int</th>
-        <td>color code</th>
+        <td>Color</td>
+        <td>int</td>
+        <td>color code</td>
       </tr>
       <tr>
-        <td>Comment</th>
-        <td>str</th>
-        <td>unique comment within the submodel for specifying the element</th>
+        <td>Comment</td>
+        <td>str</td>
+        <td>unique comment within the submodel for specifying the element</td>
       </tr>
     </table>
     <img src="images\solidcylinder.svg" width="500">
+
+    <h2 id="create_solidsphere">create_solidsphere(td: OpenTDv62.ThermalDesktop, data: pandas.Series)</h2>
+    <table border="1">
+      <tr>
+        <th>parameter</th>
+        <th>type</th>
+        <th>description</th>
+      </tr>
+      <tr>
+        <td>td</td>
+        <td>OpenTDv62.ThermalDesktop</td>
+        <td>Thermal Desktop instance</td>
+      </tr>
+      <tr>
+        <td>data</td>
+        <td>pandas.Series</td>
+        <td>solidsphere parameters in pandas.Series</td>
+      </tr>
+    </table>
+    <p>In 'data' (type: pandas.Series), the following parameters shall be specified.</p>
+    <table border="1">
+      <tr>
+        <th>keyword</th>
+        <th>type</th>
+        <th>description</th>
+      </tr>
+      <tr>
+        <td>Submodel name</td>
+        <td>str</td>
+        <td>name of the submodel</td>
+      </tr>
+      <tr>
+        <td>Start ID</td>
+        <td>int</td>
+        <td>starting node ID for this element</td>
+      </tr>
+      <tr>
+        <td>Breakdown U</td>
+        <td>int</td>
+        <td>number of divisions in angular direction</td>
+      </tr>
+      <tr>
+        <td>Breakdown V</td>
+        <td>int</td>
+        <td>number of divisions in radial direction</td>
+      </tr>
+      <tr>
+        <td>Breakdown W</td>
+        <td>int</td>
+        <td>number of divisions in height direction</td>
+      </tr>
+      <tr>
+        <td>Node positions</td>
+        <td>str</td>
+        <td>'EDGE' or 'CENTERED'</td>
+      </tr>
+      <tr>
+        <td>Rmax [mm]</td>
+        <td>float</td>
+        <td>max radius of the solid cylinder</td>
+      </tr>
+      <tr>
+        <td>Rmin [mm]</td>
+        <td>float</td>
+        <td>min radius of the solid cylinder</td>
+      </tr>
+      <tr>
+        <td>Start angle [deg]</td>
+        <td>float</td>
+        <td>start angle of the sphere in the azimuth direction</td>
+      </tr>
+      <tr>
+        <td>End angle [deg]</td>
+        <td>float</td>
+        <td>end angle of the sphere in the azimuth direction</td>
+      </tr>
+      <tr>
+        <td>Bmin [deg]</td>
+        <td>float</td>
+        <td>start angle of the sphere in the elevation direction</td>
+      </tr>
+      <tr>
+        <td>Bmax [deg]</td>
+        <td>float</td>
+        <td>end angle of the sphere in the elevation direction</td>
+      </tr>
+      <tr>
+        <td>X [mm]</td>
+        <td>float</td>
+        <td>X coordinate of the element origin</td>
+      </tr>
+      <tr>
+        <td>Y [mm]</td>
+        <td>float</td>
+        <td>Y coordinate of the element origin</td>
+      </tr>
+      <tr>
+        <td>Z [mm]</td>
+        <td>float</td>
+        <td>Z coordinate of the element origin</td>
+      </tr>
+      <tr>
+        <td>rot X [deg]</td>
+        <td>float</td>
+        <td>X roation angle of the ZYX Euler angles</td>
+      </tr>
+      <tr>
+        <td>rot Y [deg]</td>
+        <td>float</td>
+        <td>Y roation angle of the ZYX Euler angles</td>
+      </tr>
+      <tr>
+        <td>rot Z [deg]</td>
+        <td>float</td>
+        <td>Z roation angle of the ZYX Euler angles</td>
+      </tr>
+      <tr>
+        <td>GMIN optical</td>
+        <td>str</td>
+        <td>optical property name of the GMIN surface</td>
+      </tr>
+      <tr>
+        <td>GMAX optical</td>
+        <td>str</td>
+        <td>optical property name of the GMAX surface</td>
+      </tr>
+      <tr>
+        <td>RMIN optical</td>
+        <td>str</td>
+        <td>optical property name of the RMIN surface</td>
+      </tr>
+      <tr>
+        <td>RMAX optical</td>
+        <td>str</td>
+        <td>optical property name of the RMAX surface</td>
+      </tr>
+      <tr>
+        <td>BMIN optical</td>
+        <td>str</td>
+        <td>optical property name of the HMIN surface</td>
+      </tr>
+      <tr>
+        <td>BMAX optical</td>
+        <td>str</td>
+        <td>optical property name of the HMAX surface</td>
+      </tr>
+      <tr>
+        <td>Material</td>
+        <td>str</td>
+        <td>name of the bulk material</td>
+      </tr>
+      <tr>
+        <td>GMIN group</td>
+        <td>str</td>
+        <td>analysis group name of the GMIN surface</td>
+      </tr>
+      <tr>
+        <td>GMAX group</td>
+        <td>str</td>
+        <td>analysis group name of the GMAX surface</td>
+      </tr>
+      <tr>
+        <td>RMIN group</td>
+        <td>str</td>
+        <td>analysis group name of the RMIN surface</td>
+      </tr>
+      <tr>
+        <td>RMAX group</td>
+        <td>str</td>
+        <td>analysis group name of the RMAX surface</td>
+      </tr>
+      <tr>
+        <td>BMIN group</td>
+        <td>str</td>
+        <td>analysis group name of the HMIN surface</td>
+      </tr>
+      <tr>
+        <td>BMAX group</td>
+        <td>str</td>
+        <td>analysis group name of the HMAX surface</td>
+      </tr>
+      <tr>
+        <td>Color</td>
+        <td>int</td>
+        <td>color code</td>
+      </tr>
+      <tr>
+        <td>Comment</td>
+        <td>str</td>
+        <td>unique comment within the submodel for specifying the element</td>
+      </tr>
+    </table>
+
+    <h2 id="create_solidcone">create_solidcone(td: OpenTDv62.ThermalDesktop, data: pandas.Series)</h2>
+    <table border="1">
+      <tr>
+        <th>parameter</th>
+        <th>type</th>
+        <th>description</th>
+      </tr>
+      <tr>
+        <td>td</td>
+        <td>OpenTDv62.ThermalDesktop</td>
+        <td>Thermal Desktop instance</td>
+      </tr>
+      <tr>
+        <td>data</td>
+        <td>pandas.Series</td>
+        <td>rectangle parameters in pandas.Series</td>
+      </tr>
+    </table>
+    <p>In 'data' (type: pandas.Series), the following parameters shall be specified.</p>
+    <table border="1">
+      <tr>
+        <th>keyword</th>
+        <th>type</th>
+        <th>description</th>
+      </tr>
+      <tr>
+        <td>Submodel name</td>
+        <td>str</td>
+        <td>name of the submodel</td>
+      </tr>
+      <tr>
+        <td>Start ID</td>
+        <td>int</td>
+        <td>starting node ID for this element</td>
+      </tr>
+      <tr>
+        <td>Breakdown U</td>
+        <td>int</td>
+        <td>number of divisions in angular direction</td>
+      </tr>
+      <tr>
+        <td>Breakdown V</td>
+        <td>int</td>
+        <td>number of divisions in radial direction</td>
+      </tr>
+      <tr>
+        <td>Breakdown W</td>
+        <td>int</td>
+        <td>number of divisions in height direction</td>
+      </tr>
+      <tr>
+        <td>Node positions</td>
+        <td>str</td>
+        <td>'EDGE' or 'CENTERED'</td>
+      </tr>
+      <tr>
+        <td>Base Rmax [mm]</td>
+        <td>float</td>
+        <td>max radius of the cone base surface</td>
+      </tr>
+      <tr>
+        <td>Base Rmin [mm]</td>
+        <td>float</td>
+        <td>min radius of the cone base surface</td>
+      </tr>
+      <tr>
+        <td>Top Rmax [mm]</td>
+        <td>float</td>
+        <td>max radius of the cone top surface</td>
+      </tr>
+      <tr>
+        <td>Top Rmin [mm]</td>
+        <td>float</td>
+        <td>min radius of the cone top surface</td>
+      </tr>
+      <tr>
+        <td>Height [mm]</td>
+        <td>float</td>
+        <td>height of the cylinder</td>
+      </tr>
+      <tr>
+        <td>Start angle [deg]</td>
+        <td>float</td>
+        <td>start angle of the cylinder</td>
+      </tr>
+      <tr>
+        <td>End angle [deg]</td>
+        <td>float</td>
+        <td>end angle of the cylinder</td>
+      </tr>
+      <tr>
+        <td>X [mm]</td>
+        <td>float</td>
+        <td>X coordinate of the element origin</td>
+      </tr>
+      <tr>
+        <td>Y [mm]</td>
+        <td>float</td>
+        <td>Y coordinate of the element origin</td>
+      </tr>
+      <tr>
+        <td>Z [mm]</td>
+        <td>float</td>
+        <td>Z coordinate of the element origin</td>
+      </tr>
+      <tr>
+        <td>rot X [deg]</td>
+        <td>float</td>
+        <td>X roation angle of the ZYX Euler angles</td>
+      </tr>
+      <tr>
+        <td>rot Y [deg]</td>
+        <td>float</td>
+        <td>Y roation angle of the ZYX Euler angles</td>
+      </tr>
+      <tr>
+        <td>rot Z [deg]</td>
+        <td>float</td>
+        <td>Z roation angle of the ZYX Euler angles</td>
+      </tr>
+      <tr>
+        <td>GMIN optical</td>
+        <td>str</td>
+        <td>optical property name of the GMIN surface</td>
+      </tr>
+      <tr>
+        <td>GMAX optical</td>
+        <td>str</td>
+        <td>optical property name of the GMAX surface</td>
+      </tr>
+      <tr>
+        <td>RMIN optical</td>
+        <td>str</td>
+        <td>optical property name of the RMIN surface</td>
+      </tr>
+      <tr>
+        <td>RMAX optical</td>
+        <td>str</td>
+        <td>optical property name of the RMAX surface</td>
+      </tr>
+      <tr>
+        <td>HMIN optical</td>
+        <td>str</td>
+        <td>optical property name of the HMIN surface</td>
+      </tr>
+      <tr>
+        <td>HMAX optical</td>
+        <td>str</td>
+        <td>optical property name of the HMAX surface</td>
+      </tr>
+      <tr>
+        <td>Material</td>
+        <td>str</td>
+        <td>name of the bulk material</td>
+      </tr>
+      <tr>
+        <td>GMIN group</td>
+        <td>str</td>
+        <td>analysis group name of the GMIN surface</td>
+      </tr>
+      <tr>
+        <td>GMAX group</td>
+        <td>str</td>
+        <td>analysis group name of the GMAX surface</td>
+      </tr>
+      <tr>
+        <td>RMIN group</td>
+        <td>str</td>
+        <td>analysis group name of the RMIN surface</td>
+      </tr>
+      <tr>
+        <td>RMAX group</td>
+        <td>str</td>
+        <td>analysis group name of the RMAX surface</td>
+      </tr>
+      <tr>
+        <td>HMIN group</td>
+        <td>str</td>
+        <td>analysis group name of the HMIN surface</td>
+      </tr>
+      <tr>
+        <td>HMAX group</td>
+        <td>str</td>
+        <td>analysis group name of the HMAX surface</td>
+      </tr>
+      <tr>
+        <td>Color</td>
+        <td>int</td>
+        <td>color code</td>
+      </tr>
+      <tr>
+        <td>Comment</td>
+        <td>str</td>
+        <td>unique comment within the submodel for specifying the element</td>
+      </tr>
+    </table>
+    
   </body>
   <footer>
     <a href="index.html">pytd62 documentation</a> &#187;
