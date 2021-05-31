@@ -79,8 +79,8 @@ def create_cylinder(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     cylinder.TopStartId = data['Start ID']
     cylinder.Radius = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Radius [mm]']*0.001)
     cylinder.Height = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Height [mm]']*0.001)
-    cylinder.StartAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle [deg]'])
-    cylinder.EndAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['End angle [deg]'])
+    cylinder.StartAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle [deg]']*1.0)
+    cylinder.EndAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['End angle [deg]']*1.0)
     cylinder.BreakdownU.Num = data['Breakdown U']
     cylinder.BreakdownV.Num = data['Breakdown V']
     if data['Node positions'] == 'EDGE':
@@ -116,8 +116,8 @@ def create_disk(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     disk.TopStartId = data['Start ID']
     disk.MaxRadius = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Max radius [mm]']*0.001)
     disk.MinRadius = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Min radius [mm]']*0.001)
-    disk.StartAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle [deg]'])
-    disk.EndAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['End angle [deg]'])
+    disk.StartAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle [deg]']*1.0)
+    disk.EndAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['End angle [deg]']*1.0)
     disk.BreakdownU.Num = data['Breakdown U']
     disk.BreakdownV.Num = data['Breakdown V']
     if data['Node positions'] == 'EDGE':
@@ -154,8 +154,8 @@ def create_cone(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     cone.BaseRadius = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Base radius [mm]']*0.001)
     cone.TopRadius = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Top radius [mm]']*0.001)
     cone.Height = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Height [mm]']*0.001)
-    cone.StartAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle [deg]'])
-    cone.EndAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['End angle [deg]'])
+    cone.StartAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle [deg]']*1.0)
+    cone.EndAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['End angle [deg]']*1.0)
     cone.BreakdownU.Num = data['Breakdown U']
     cone.BreakdownV.Num = data['Breakdown V']
     if data['Node positions'] == 'EDGE':
@@ -191,10 +191,10 @@ def create_torus(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     torus.TopStartId = data['Start ID']
     torus.LargeRadius = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Large radius [mm]']*0.001)
     torus.SmallRadius = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Small radius [mm]']*0.001)
-    torus.StartAngleLargeRadius = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle large radius [deg]'])
-    torus.EndAngleLargeRadius = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['End angle large radius [deg]'])
-    torus.StartAngleSmallRadius = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle small radius [deg]'])
-    torus.EndAngleSmallRadius = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['End angle small radius [deg]'])
+    torus.StartAngleLargeRadius = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle large radius [deg]']*1.0)
+    torus.EndAngleLargeRadius = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['End angle large radius [deg]']*1.0)
+    torus.StartAngleSmallRadius = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle small radius [deg]']*1.0)
+    torus.EndAngleSmallRadius = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['End angle small radius [deg]']*1.0)
     torus.BreakdownU.Num = data['Breakdown U']
     torus.BreakdownV.Num = data['Breakdown V']
     if data['Node positions'] == 'EDGE':
@@ -230,9 +230,9 @@ def create_scarfedcylinder(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     scarfedcylinder.TopStartId = data['Start ID']
     scarfedcylinder.Radius = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Radius [mm]']*0.001)
     scarfedcylinder.Height = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Height [mm]']*0.001)
-    scarfedcylinder.StartAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle [deg]'])
-    scarfedcylinder.EndAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['End angle [deg]'])
-    scarfedcylinder.ScarfAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Scarf angle [deg]'])
+    scarfedcylinder.StartAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle [deg]']*1.0)
+    scarfedcylinder.EndAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['End angle [deg]']*1.0)
+    scarfedcylinder.ScarfAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Scarf angle [deg]']*1.0)
     scarfedcylinder.BreakdownU.Num = data['Breakdown U']
     scarfedcylinder.BreakdownV.Num = data['Breakdown V']
     if data['Node positions'] == 'EDGE':
@@ -269,8 +269,8 @@ def create_sphere(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     sphere.Radius = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Radius [mm]']*0.001)
     sphere.MinHeight = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Min height [mm]']*0.001)
     sphere.MaxHeight = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Max height [mm]']*0.001)
-    sphere.StartAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle [deg]'])
-    sphere.EndAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['End angle [deg]'])
+    sphere.StartAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle [deg]']*1.0)
+    sphere.EndAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['End angle [deg]']*1.0)
     sphere.BreakdownU.Num = data['Breakdown U']
     sphere.BreakdownV.Num = data['Breakdown V']
     if data['Node positions'] == 'EDGE':

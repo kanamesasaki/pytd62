@@ -90,8 +90,8 @@ def create_solidcylinder(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     solidcylinder.Rmax = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Rmax [mm]']*0.001)
     solidcylinder.Rmin = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Rmin [mm]']*0.001)
     solidcylinder.Height = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Height [mm]']*0.001)
-    solidcylinder.StartAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle [deg]'])
-    solidcylinder.EndAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['End angle [deg]'])
+    solidcylinder.StartAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle [deg]']*1.0)
+    solidcylinder.EndAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['End angle [deg]']*1.0)
     solidcylinder.BreakdownU.Num = data['Breakdown U']
     solidcylinder.BreakdownV.Num = data['Breakdown V']
     solidcylinder.BreakdownW.Num = data['Breakdown W']
@@ -134,10 +134,10 @@ def create_solidsphere(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     solidsphere.StartId = 1
     solidsphere.Rmax = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Rmax [mm]']*0.001)
     solidsphere.Rmin = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Rmin [mm]']*0.001)
-    solidsphere.StartAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle [deg]'])
-    solidsphere.EndAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['End angle [deg]'])
-    solidsphere.Bmin = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Bmin [deg]'])
-    solidsphere.Bmax = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Bmax [deg]'])
+    solidsphere.StartAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle [deg]']*1.0)
+    solidsphere.EndAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['End angle [deg]']*1.0)
+    solidsphere.Bmin = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Bmin [deg]']*1.0)
+    solidsphere.Bmax = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Bmax [deg]']*1.0)
     solidsphere.BreakdownU.Num = data['Breakdown U']
     solidsphere.BreakdownV.Num = data['Breakdown V']
     solidsphere.BreakdownW.Num = data['Breakdown W']
@@ -183,8 +183,8 @@ def create_solidcone(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     solidcone.TopRmax = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Top Rmax [mm]']*0.001)
     solidcone.TopRmin = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Top Rmin [mm]']*0.001)
     solidcone.Height = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Height [mm]']*0.001)
-    solidcone.StartAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle [deg]'])
-    solidcone.EndAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['End angle [deg]'])
+    solidcone.StartAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle [deg]']*1.0)
+    solidcone.EndAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['End angle [deg]']*1.0)
     solidcone.BreakdownU.Num = data['Breakdown U']
     solidcone.BreakdownV.Num = data['Breakdown V']
     solidcone.BreakdownW.Num = data['Breakdown W']
