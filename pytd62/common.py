@@ -66,6 +66,19 @@ def get_node_handle(td, submodel_name, node_id, nodes: list=[]):
     elif len(node_extracted) > 1:
         error_message = submodel_name + '.' + str(node_id) + ' is assigned to multiple nodes.'
         raise ValueError(error_message)
+        
+def get_node(td: OpenTDv62.ThermalDesktop, submodel_name: str, node_id: int, nodes: list=[]):
+    if nodes == []:
+        nodes = td.GetNodes()
+    node_extracted = [inode for inode in nodes if submodel_name == inode.Submodel.Name and node_id == inode.Id]
+    if len(node_extracted) == 1:
+        return node_extracted[0]
+    elif len(node_extracted) == 0:
+        error_message = submodel_name + '.' + str(node_id) + ' does not exist.'
+        raise ValueError(error_message)
+    else:
+        error_message = submodel_name + '.' + str(node_id) + ' is assigned to multiple nodes.'
+        raise ValueError(error_message)
     
 def get_submodel_nodes(td: OpenTDv62.ThermalDesktop, submodel_name: str) -> list:
     nodes = td.GetNodes()
