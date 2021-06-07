@@ -2,7 +2,7 @@ import math
 import numpy as np
 import pandas as pd
 import sys, clr
-sys.path.append("C:/Windows/Microsoft.NET/assembly/GAC_MSIL/OpenTDv62/ReplaceMe")
+sys.path.append("C:/Windows/Microsoft.NET/assembly/GAC_MSIL/OpenTDv62/v4.0_6.2.0.1__65e6d95ed5c2e178")
 clr.AddReference("OpenTDv62")
 import OpenTDv62
 clr.AddReference('System')
@@ -53,6 +53,17 @@ def get_number_of_nodes(td: OpenTDv62.ThermalDesktop, submodel_name: str='') -> 
     if submodel_name == '':
         nodes = [inode for inode in nodes if submodel_name == inode.Submodel.Name]
     return len(nodes)
+
+def get_node_handle(td, submodel_name, node_id, nodes: list=[]):
+    if nodes == []:
+        nodes = td.GetNodes()
+    node_extracted = [inode for inode in nodes if submodel_name == inode.Submodel.Name and node_id == inode.Id]
+    if len(node_extracted) == 1:
+        return node_extracted[0].Handle
+    elif len(node_extracted) == 0:
+        raise ValueError('The requested node does not exist')
+    elif len(node_extracted) > 1:
+        raise ValueError('The requested node spec is assigned to multiple nodes')
     
 def get_submodel_nodes(td: OpenTDv62.ThermalDesktop, submodel_name: str) -> list:
     nodes = td.GetNodes()
