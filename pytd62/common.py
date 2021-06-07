@@ -2,7 +2,7 @@ import math
 import numpy as np
 import pandas as pd
 import sys, clr
-sys.path.append("C:/Windows/Microsoft.NET/assembly/GAC_MSIL/OpenTDv62/v4.0_6.2.0.1__65e6d95ed5c2e178")
+sys.path.append("C:/Windows/Microsoft.NET/assembly/GAC_MSIL/OpenTDv62/ReplaceMe")
 clr.AddReference("OpenTDv62")
 import OpenTDv62
 clr.AddReference('System')
@@ -87,6 +87,31 @@ def merge_submodel_nodes(td: OpenTDv62.ThermalDesktop, submodel_name: str, toler
     merge.NodeHandles = nodes
     merge.Tolerance = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](tolerance)
     td.MergeNodes(merge)
+    
+def create_node(td: OpenTDv62.ThermalDesktop, data: pd.Series):
+    node = td.CreateNode()
+    node.Submodel = OpenTDv62.SubmodelNameData(data['Submodel name'])
+    node.Id = data['ID']
+    node.InitialTemp = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Temp](data['Initial temperature [K]']*1.0)
+    node.Origin = OpenTDv62.Point3d(data['X [mm]']*0.001, data['Y [mm]']*0.001, data['Z [mm]']*0.001)
+    node.MassVol = data['Mass volume [J/K]']*1.0
+    if data['Node type'] == 'DIFFUSION':
+        node.NodeType = OpenTDv62.RcNodeData.NodeTypes.DIFFUSION
+    elif data['Node type'] == 'ARITHMETIC':
+        node.NodeType = OpenTDv62.RcNodeData.NodeTypes.ARITHMETIC
+    elif data['Node type'] == 'BOUNDARY':
+        node.NodeType = OpenTDv62.RcNodeData.NodeTypes.BOUNDARY
+    elif data['Node type'] == 'CLONE':
+        node.NodeType = OpenTDv62.RcNodeData.NodeTypes.CLONE
+    else:
+        raise ValueError('Unexpected node type')
+    node.Comment = str(data['Comment'])
+    node.Update()
+    
+def create_nodes(td: OpenTDv62.ThermalDesktop, file_name: str):
+    df = pd.read_csv(file_name)
+    for index, data in df.iterrows():
+        create_node(td, data)
     
 def delete_contactors(td: OpenTDv62.ThermalDesktop):
     contactors = td.GetContactors()
