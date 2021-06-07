@@ -61,9 +61,11 @@ def get_node_handle(td, submodel_name, node_id, nodes: list=[]):
     if len(node_extracted) == 1:
         return node_extracted[0].Handle
     elif len(node_extracted) == 0:
-        raise ValueError('The requested node does not exist')
+        error_message = submodel_name + '.' + str(node_id) + ' does not exist.'
+        raise ValueError(error_message)
     elif len(node_extracted) > 1:
-        raise ValueError('The requested node spec is assigned to multiple nodes')
+        error_message = submodel_name + '.' + str(node_id) + ' is assigned to multiple nodes.'
+        raise ValueError(error_message)
     
 def get_submodel_nodes(td: OpenTDv62.ThermalDesktop, submodel_name: str) -> list:
     nodes = td.GetNodes()
