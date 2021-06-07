@@ -78,7 +78,7 @@ def create_solidbrick(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     solidbrick.BaseTrans.entry[2][3] = data['Z [mm]']*0.001
     solidbrick.AnalysisGroups = solid_analysisgroup(data['XMIN group'], data['XMAX group'], data['YMIN group'], data['YMAX group'], data['ZMIN group'], data['ZMAX group'])
     solidbrick.ColorIndex = data['Color']
-    solidbrick.Comment = data['Comment']
+    solidbrick.Comment = str(data['Comment'])
     solidbrick.Update()
 
 def create_solidcylinder(td: OpenTDv62.ThermalDesktop, data: pd.Series):
@@ -123,7 +123,7 @@ def create_solidcylinder(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     solidcylinder.BaseTrans.entry[2][3] = data['Z [mm]']*0.001
     solidcylinder.AnalysisGroups = solid_analysisgroup(data['GMIN group'], data['GMAX group'], data['RMIN group'], data['RMAX group'], data['HMIN group'], data['HMAX group'])
     solidcylinder.ColorIndex = data['Color']
-    solidcylinder.Comment = data['Comment']
+    solidcylinder.Comment = str(data['Comment'])
     solidcylinder.Update()
     
 def create_solidsphere(td: OpenTDv62.ThermalDesktop, data: pd.Series):
@@ -169,7 +169,7 @@ def create_solidsphere(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     solidsphere.BaseTrans.entry[2][3] = data['Z [mm]']*0.001
     solidsphere.AnalysisGroups = solid_analysisgroup(data['GMIN group'], data['GMAX group'], data['RMIN group'], data['RMAX group'], data['BMIN group'], data['BMAX group'])
     solidsphere.ColorIndex = data['Color']
-    solidsphere.Comment = data['Comment']
+    solidsphere.Comment = str(data['Comment'])
     solidsphere.Update()
     
 def create_solidcone(td: OpenTDv62.ThermalDesktop, data: pd.Series):
@@ -216,5 +216,5 @@ def create_solidcone(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     solidcone.BaseTrans.entry[2][3] = data['Z [mm]']*0.001
     solidcone.AnalysisGroups = solid_analysisgroup(data['GMIN group'], data['GMAX group'], data['RMIN group'], data['RMAX group'], data['HMIN group'], data['HMAX group'])
     solidcone.ColorIndex = data['Color']
-    solidcone.Comment = data['Comment']
+    solidcone.Comment = str(data['Comment'])
     solidcone.Update()

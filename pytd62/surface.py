@@ -69,7 +69,7 @@ def create_rectangle(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     rectangle.BaseTrans.entry[2][3] = data['Z [mm]']*0.001
     rectangle.AnalysisGroups = surface_analysisgroup(data['Top analysis group'], data['Bottom analysis group'])
     rectangle.ColorIndex = data['Color']
-    rectangle.Comment = data['Comment']
+    rectangle.Comment = str(data['Comment'])
     rectangle.Update()
 
 def create_cylinder(td: OpenTDv62.ThermalDesktop, data: pd.Series):
@@ -106,7 +106,7 @@ def create_cylinder(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     cylinder.AnalysisGroups = surface_analysisgroup(data['Top analysis group'], data['Bottom analysis group'])
     cylinder.CondSubmodel = OpenTDv62.SubmodelNameData(data['Submodel name'])
     cylinder.ColorIndex = data['Color']
-    cylinder.Comment = data['Comment']
+    cylinder.Comment = str(data['Comment'])
     cylinder.Update()
     
 def create_disk(td: OpenTDv62.ThermalDesktop, data: pd.Series):
@@ -143,7 +143,7 @@ def create_disk(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     disk.AnalysisGroups = surface_analysisgroup(data['Top analysis group'], data['Bottom analysis group'])
     disk.CondSubmodel = OpenTDv62.SubmodelNameData(data['Submodel name'])
     disk.ColorIndex = data['Color']
-    disk.Comment = data['Comment']
+    disk.Comment = str(data['Comment'])
     disk.Update()
     
 def create_cone(td: OpenTDv62.ThermalDesktop, data: pd.Series):
@@ -181,7 +181,7 @@ def create_cone(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     cone.AnalysisGroups = surface_analysisgroup(data['Top analysis group'], data['Bottom analysis group'])
     cone.CondSubmodel = OpenTDv62.SubmodelNameData(data['Submodel name'])
     cone.ColorIndex = data['Color']
-    cone.Comment = data['Comment']
+    cone.Comment = str(data['Comment'])
     cone.Update()
     
 def create_torus(td: OpenTDv62.ThermalDesktop, data: pd.Series):
@@ -220,7 +220,7 @@ def create_torus(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     torus.AnalysisGroups = surface_analysisgroup(data['Top analysis group'], data['Bottom analysis group'])
     torus.CondSubmodel = OpenTDv62.SubmodelNameData(data['Submodel name'])
     torus.ColorIndex = data['Color']
-    torus.Comment = data['Comment']
+    torus.Comment = str(data['Comment'])
     torus.Update()
     
 def create_scarfedcylinder(td: OpenTDv62.ThermalDesktop, data: pd.Series):
@@ -258,7 +258,7 @@ def create_scarfedcylinder(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     scarfedcylinder.AnalysisGroups = surface_analysisgroup(data['Top analysis group'], data['Bottom analysis group'])
     scarfedcylinder.CondSubmodel = OpenTDv62.SubmodelNameData(data['Submodel name'])
     scarfedcylinder.ColorIndex = data['Color']
-    scarfedcylinder.Comment = data['Comment']
+    scarfedcylinder.Comment = str(data['Comment'])
     scarfedcylinder.Update()
     
 def create_sphere(td: OpenTDv62.ThermalDesktop, data: pd.Series):
@@ -296,5 +296,5 @@ def create_sphere(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     sphere.AnalysisGroups = surface_analysisgroup(data['Top analysis group'], data['Bottom analysis group'])
     sphere.CondSubmodel = OpenTDv62.SubmodelNameData(data['Submodel name'])
     sphere.ColorIndex = data['Color']
-    sphere.Comment = data['Comment']
+    sphere.Comment = str(data['Comment'])
     sphere.Update()
