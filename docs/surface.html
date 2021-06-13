@@ -1057,6 +1057,35 @@
       </tr>
     </table>
     <img src="images\sphere.svg" width="500">
+    
+    <h2 id="area_torus">area_torus(disk: OpenTDv62.RadCAD.Torus)</h2>
+    <p>This function returns an area of the Torus element.</p>
+    <table border="1">
+      <tr>
+        <th>parameter</th>
+        <th>type</th>
+        <th>description</th>
+      </tr>
+      <tr>
+        <td>disk</th>
+        <td>OpenTDv62.RadCAD.Torus</th>
+        <td>Instance of the Torus element</th>
+      </tr>
+    </table>
+    $$
+    \begin{align}
+    \mathrm{area} &= \int_{\varphi_{\mathrm{start}}}^{\varphi_{\mathrm{end}}} \int_{\theta_{\mathrm{start}}}^{\theta_{\mathrm{end}}} (R + r \cos \theta)d\varphi \times r d\theta \\
+    &= \left\{ Rr(\theta_{\mathrm{end}} - \theta_{\mathrm{start}}) + r^2 (\sin \theta_{\mathrm{end}} - \sin \theta_{\mathrm{start}}) \right\} (\varphi_{\mathrm{end}} - \varphi_{\mathrm{start}})
+    \end{align} 
+    $$
+    $$
+    \begin{align}
+    \varphi&: \mathrm{Angle~of~the~large~radius} \\
+    \theta&: \mathrm{Angle~of~the~small~radius} \\
+    R&: \mathrm{Large~radius} \\
+    r&: \mathrm{Small~radius}
+    \end{align}
+    $$
 
   </body>
   <footer>

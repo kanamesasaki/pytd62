@@ -1,5 +1,6 @@
 import math
 import pandas as pd
+import numpy as np
 import sys, clr
 sys.path.append("C:/Windows/Microsoft.NET/assembly/GAC_MSIL/OpenTDv62/ReplaceMe")
 clr.AddReference("OpenTDv62")
@@ -298,3 +299,74 @@ def create_sphere(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     sphere.ColorIndex = data['Color']
     sphere.Comment = str(data['Comment'])
     sphere.Update()
+    
+def area_disk(disk: OpenTDv62.RadCAD.Disk):
+    angle = abs(disk.EndAngle.GetValueSI() - disk.StartAngle.GetValueSI())
+    area = math.pi * (disk.MaxRadius.GetValueSI()**2 - disk.MinRadius.GetValueSI()**2) * angle/360.0
+    return area
+
+def area_rectangle(rectangle: OpenTDv62.RadCAD.Rectangle):
+    area = rectangle.XMax.GetValueSI() * rectangle.YMax.GetValueSI()
+    return area
+
+def area_cylinder(cylinder: OpenTDv62.RadCAD.Cylinder):
+    angle = abs(cylinder.EndAngle.GetValueSI() - cylinder.StartAngle.GetValueSI())
+    area = 2 * math.pi * cylinder.Radius.GetValueSI() * angle/360 * cylinder.Height.GetValueSI()
+    return area
+
+def area_cone(cone: OpenTDv62.RadCAD.Cone):
+    angle = abs(cone.EndAngle.GetValueSI() - cone.StartAngle.GetValueSI())
+    rtop = cone.TopRadius.GetValueSI()
+    rbase = cone.BaseRadius.GetValueSI()
+    height = cone.Height.GetValueSI()
+    area = math.pi * math.sqrt((rtop-rbase)**2+height**2) * (rbase+rtop) * angle/360
+    return area
+
+def area_torus(torus: OpenTDv62.RadCAD.Torus):
+    r_large = torus.LargeRadius.GetValueSI()
+    r_small = torus.SmallRadius.GetValueSI()
+    start_angle_small = torus.StartAngleSmallRadius.GetValueSI() * math.pi/180
+    end_angle_small = torus.EndAngleSmallRadius.GetValueSI() * math.pi/180
+    if start_angle_small > end_angle_small:
+        raise ValueError('StartAngleSmallRadius shall be smaller than EndAngleSmallRadius')
+    angle_large = abs(torus.EndAngleLargeRadius.GetValueSI() - torus.StartAngleLargeRadius.GetValueSI())
+    area = 2*math.pi*r_large*r_small*(end_angle_small-start_angle_small) + 2*math.pi*r_small**2*(math.sin(end_angle_small)-math.sin(start_angle_small))
+    return area * angle_large/360
+
+def area_lineartri(td: OpenTDv62.ThermalDesktop, lineartri: OpenTDv62.RadCAD.FEM.LinearTri):
+    edge1 = td.GetNode(lineartri.AttachedNodeHandles[0])
+    edge2 = td.GetNode(lineartri.AttachedNodeHandles[1])
+    edge3 = td.GetNode(lineartri.AttachedNodeHandles[2])
+    xyz1 = np.array([edge1.Origin.X.GetValueSI(), edge1.Origin.Y.GetValueSI(), edge1.Origin.Z.GetValueSI()])
+    xyz2 = np.array([edge2.Origin.X.GetValueSI(), edge2.Origin.Y.GetValueSI(), edge2.Origin.Z.GetValueSI()])
+    xyz3 = np.array([edge3.Origin.X.GetValueSI(), edge3.Origin.Y.GetValueSI(), edge3.Origin.Z.GetValueSI()])
+    vec12 = xyz2 - xyz1
+    vec13 = xyz3 - xyz1
+    area = np.linalg.norm(np.cross(vec12, vec13), ord=2) * 0.5
+    return area
+
+def area_scarfedcylinder(scarfedcylinder: OpenTDv62.RadCAD.ScarfedCylinder):
+    start = scarfedcylinder.StartAngle.GetValueSI()*math.pi/180
+    end = scarfedcylinder.EndAngle.GetValueSI()*math.pi/180
+    scarf = scarfedcylinder.ScarfAngle.GetValueSI()*math.pi/180
+    radius = scarfedcylinder.Radius.GetValueSI()
+    area = radius*scarfedcylinder.Height.GetValueSI()*(end-start) - radius**2*math.tan(scarf)*(math.sin(end)-math.sin(start))
+    return area
+
+def area_polygon(polygon: OpenTDv62.RadCAD.Polygon):
+    points = []
+    vectors = []
+    num_vertices = len(polygon.Vertices)//2
+    for i in range(num_vertices):
+        poly = polygon.Vertices[i]
+        point = np.array([poly.X.GetValueSI(),poly.Y.GetValueSI(),poly.Z.GetValueSI()])
+        points.append(point)
+        if i > 0:
+            vectors.append(points[i]-points[0])
+    normal = np.cross(vectors[0], vectors[1])
+    area = 0.0
+    for i in range(num_vertices-2):
+        if not math.isclose(np.inner(normal, vectors[i+1]), 0.0, abs_tol=1.0e-6):
+            raise ValueError('The vertex is not on the surface')
+        area += np.linalg.norm(np.cross(vectors[i], vectors[i+1]), ord=2) * 0.5
+    return area
