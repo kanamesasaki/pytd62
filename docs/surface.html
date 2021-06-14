@@ -1058,8 +1058,68 @@
     </table>
     <img src="images\sphere.svg" width="500">
     
+    <h2 id="area_disk">area_disk(disk: OpenTDv62.RadCAD.Disk)</h2>
+    <p>This function returns the area of the given Disk element.</p>
+    <table border="1">
+      <tr>
+        <th>parameter</th>
+        <th>type</th>
+        <th>description</th>
+      </tr>
+      <tr>
+        <td>disk</th>
+        <td>OpenTDv62.RadCAD.Disk</th>
+        <td>Instance of the Disk element</th>
+      </tr>
+    </table>
+
+    <h2 id="area_rectangle">area_rectangle(disk: OpenTDv62.RadCAD.Rectangle)</h2>
+    <p>This function returns the area of the given Rectangle element.</p>
+    <table border="1">
+      <tr>
+        <th>parameter</th>
+        <th>type</th>
+        <th>description</th>
+      </tr>
+      <tr>
+        <td>disk</th>
+        <td>OpenTDv62.RadCAD.Rectangle</th>
+        <td>Instance of the Rectangle element</th>
+      </tr>
+    </table>
+
+    <h2 id="area_cylinder">area_cylinder(disk: OpenTDv62.RadCAD.Cylinder)</h2>
+    <p>This function returns the area of the given Cylinder element.</p>
+    <table border="1">
+      <tr>
+        <th>parameter</th>
+        <th>type</th>
+        <th>description</th>
+      </tr>
+      <tr>
+        <td>disk</th>
+        <td>OpenTDv62.RadCAD.Cylinder</th>
+        <td>Instance of the Cylinder element</th>
+      </tr>
+    </table>
+
+    <h2 id="area_cone">area_cone(disk: OpenTDv62.RadCAD.Cone)</h2>
+    <p>This function returns the area of the given Cone element.</p>
+    <table border="1">
+      <tr>
+        <th>parameter</th>
+        <th>type</th>
+        <th>description</th>
+      </tr>
+      <tr>
+        <td>disk</th>
+        <td>OpenTDv62.RadCAD.Cone</th>
+        <td>Instance of the Cone element</th>
+      </tr>
+    </table>
+
     <h2 id="area_torus">area_torus(disk: OpenTDv62.RadCAD.Torus)</h2>
-    <p>This function returns an area of the Torus element.</p>
+    <p>This function returns the area of the given Torus element.</p>
     <table border="1">
       <tr>
         <th>parameter</th>
@@ -1084,6 +1144,35 @@
     \theta&: \mathrm{Angle~of~the~small~radius} \\
     R&: \mathrm{Large~radius} \\
     r&: \mathrm{Small~radius}
+    \end{align}
+    $$
+
+    <h2 id="area_scarfedcylinder">area_scarfedcylinder(disk: OpenTDv62.RadCAD.ScarfedCylinder)</h2>
+    <p>This function returns the area of the given ScarfedCylinder element.</p>
+    <table border="1">
+      <tr>
+        <th>parameter</th>
+        <th>type</th>
+        <th>description</th>
+      </tr>
+      <tr>
+        <td>disk</th>
+        <td>OpenTDv62.RadCAD.ScarfedCylinder</th>
+        <td>Instance of the ScarfedCylinder element</th>
+      </tr>
+    </table>
+    $$
+    \begin{align}
+    \mathrm{area} &= \int_{\theta_{\mathrm{start}}}^{\theta_{\mathrm{end}}} (H - r \cos \theta~\tan \varphi) ~rd\theta \\
+    &= r H (\theta_\mathrm{end} - \theta_\mathrm{start}) - r^2 \tan \varphi (\sin \theta_\mathrm{end} - \sin \theta_\mathrm{start}) 
+    \end{align}
+    $$
+    $$
+    \begin{align}
+    H&: \mathrm{Height~of~the~cylinder~(middle~of~the~highest~and~lowest~edge)} \\
+    \theta&: \mathrm{Angle~of~the~cylinder} \\
+    r&: \mathrm{Radius~the~cylinder} \\
+    \varphi&: \mathrm{Scarf~angle}
     \end{align}
     $$
 
