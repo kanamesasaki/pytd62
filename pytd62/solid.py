@@ -15,12 +15,12 @@ def solid_analysisgroup(s0: str, s1: str, s2: str, s3: str, s4: str, s5: str):
     groups = set(faces)
     for group in groups:
         active = List[int]()
-        active.Add(1 if xmin==group else 0)
-        active.Add(1 if xmax==group else 0)
-        active.Add(1 if ymin==group else 0)
-        active.Add(1 if ymax==group else 0)
-        active.Add(1 if zmin==group else 0)
-        active.Add(1 if zmax==group else 0)
+        active.Add(1 if s0==group else 0)
+        active.Add(1 if s1==group else 0)
+        active.Add(1 if s2==group else 0)
+        active.Add(1 if s3==group else 0)
+        active.Add(1 if s4==group else 0)
+        active.Add(1 if s5==group else 0)
         analgroup.Add(group, OpenTDv62.RadCAD.FdSolid.AnalysisGroupSolidInfo(group, OpenTDv62.RadCAD.FdSolid.RcFdSolidData.Active.OUTSIDE, active))
     return analgroup
 
