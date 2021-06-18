@@ -838,6 +838,43 @@
       </tr>
     </table>
     <img src="images\solidcone.svg" width="500">
+
+    <h2 id="create_solidcone">volume_solidcone(solidcone: OpenTDv62.RadCAD.FdSolid.SolidCone)</h2>
+    <p>This function returns the volume of the given SolidCone element.</p>
+    <table border="1">
+      <tr>
+        <th>parameter</th>
+        <th>type</th>
+        <th>description</th>
+      </tr>
+      <tr>
+        <td>solidcone</th>
+        <td>OpenTDv62.RadCAD.FdSolid.SolidCone</th>
+        <td>Instance of the SolidCone element</th>
+      </tr>
+    </table>
+    <p>The volume of a SolidCone with Start angle = 0&#176; and End angle = 360&#176; can be calculated by</p>
+    $$
+    \begin{align}
+    &\pi \int_{0}^{H} \left(R_\mathrm{base} - \frac{R_\mathrm{top} - R_\mathrm{base}}{H} x\right)^2 dx 
+    - \pi \int_{0}^{H} \left(r_\mathrm{base} - \frac{r_\mathrm{top} - r_\mathrm{base}}{H} x\right)^2 dx \\
+    &= \pi \int_{0}^{H} \left\{ \left( \frac{R_\mathrm{top} - R_\mathrm{base}}{H} \right)^2 x^2 + 2 R_\mathrm{base} \left( \frac{R_\mathrm{top} - R_\mathrm{base}}{H} \right) x + R_\mathrm{base}^2 \right\} dx
+    - \pi \int_{0}^{H} \left\{ \left( \frac{r_\mathrm{top} - r_\mathrm{base}}{H} \right)^2 x^2 + 2 r_\mathrm{base} \left( \frac{r_\mathrm{top} - r_\mathrm{base}}{H} \right) x + r_\mathrm{base}^2 \right\} dx \\
+    &= \pi \left[ \left( \frac{R_\mathrm{top} - R_\mathrm{base}}{H} \right)^2 \frac{x^3}{3} + R_\mathrm{base} \left( \frac{R_\mathrm{top} - R_\mathrm{base}}{H} \right) x^2 + R_\mathrm{base}^2 x \right]^H_0
+    - \pi \left[ \left( \frac{r_\mathrm{top} - r_\mathrm{base}}{H} \right)^2 \frac{x^3}{3} + r_\mathrm{base} \left( \frac{r_\mathrm{top} - r_\mathrm{base}}{H} \right) x^2 + r_\mathrm{base}^2 x \right]^H_0 \\
+    &= \pi H \left\{ \frac{(R_\mathrm{top} - R_\mathrm{base})^2}{3} + R_\mathrm{base} (R_\mathrm{top} - R_\mathrm{base}) + R_\mathrm{base}^2 \right\}
+    - \pi H \left\{ \frac{(r_\mathrm{top} - r_\mathrm{base})^2}{3} + r_\mathrm{base} (r_\mathrm{top} - r_\mathrm{base}) + r_\mathrm{base}^2 \right\}
+    \end{align}
+    $$
+    $$
+    \begin{align}
+    H&: \mathrm{Height~of~the~cone} \\
+    R_\mathrm{top}&: \mathrm{Max~radius~of~the~top~surface} \\
+    R_\mathrm{base}&: \mathrm{Max~radius~of~the~base~surface} \\
+    r_\mathrm{top}&: \mathrm{Min~radius~of~the~top~surface} \\
+    r_\mathrm{base}&: \mathrm{Min~radius~of~the~base~surface}
+    \end{align}
+    $$
     
   </body>
   <footer>

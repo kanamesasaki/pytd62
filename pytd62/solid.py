@@ -218,3 +218,21 @@ def create_solidcone(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     solidcone.ColorIndex = data['Color']
     solidcone.Comment = str(data['Comment'])
     solidcone.Update()
+
+def volume_solidbrick(solidbrick: OpenTDv62.RadCAD.FdSolid.SolidBrick):
+    volume = solidbrick.XMax.GetValueSI() * solidbrick.YMax.GetValueSI() * solidbrick.ZMax.GetValueSI()
+    return volume
+
+def volume_solidcylinder(solidcylinder: OpenTDv62.RadCAD.FdSolid.SolidSolidcyliner):
+    angle = abs(solidcylinder.EndAngle.GetValueSI() - solidcylinder.StartAngle.GetValueSI())
+    volume = math.pi * (solidcylinder.Rmax.GetValueSI()**2 - solidcylinder.Rmin.GetValueSI()**2) * angle/360 * solidcylinder.Height.GetValueSI()
+    return volume
+
+def volume_solidcone(solidcone: OpenTDv62.RadCAD.FdSolid.SolidCone):
+    rmax_diff = solidcone.TopRmax - solidcone.BaseRmax
+    rmin_diff = solidcone.TopRmin - solidcone.BaseRmin
+    volume_max = math.pi * solidcone.Height * (rmax_diff**2/3 + solidcone.BaseRmax*rmax_diff + solidcone.BaseRmax**2)
+    volume_min = math.pi * solidcone.Height * (rmin_diff**2/3 + solidcone.BaseRmax*rmin_diff + solidcone.BaseRmin**2)
+    angle = abs(solidcone.EndAngle.GetValueSI() - solidcone.StartAngle.GetValueSI())
+    volume = (volume_max - volume_min) * angle/360
+    return volume
