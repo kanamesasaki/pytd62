@@ -127,6 +127,23 @@ def create_nodes(td: OpenTDv62.ThermalDesktop, file_name: str):
     df = pd.read_csv(file_name)
     for index, data in df.iterrows():
         create_node(td, data)
+
+def create_conductor(td: OpenTDv62.ThermalDesktop, data: pd.Series, nodes: list=[]):
+    if nodes == []:
+        nodes = td.GetNodes()
+    fr_handle = OpenTDv62.Connection(get_node_handle(td, data['From submodel'], data['From ID'], nodes))
+    to_handle = OpenTDv62.Connection(get_node_handle(td, data['To submodel'], data['To ID'], nodes))
+    cond = td.CreateConductor(fr_handle, to_handle)
+    cond.Submodel = OpenTDv62.SubmodelNameData(data['Submodel'])
+    cond.Value = data['Conductance [W/K]']*1.0
+    cond.Comment = str(data['Comment'])
+    cond.Update()
+
+def create_conductors(td: OpenTDv62.ThermalDesktop, file_name):
+    df = pd.read_csv(file_name)
+    nodes = td.GetNodes()
+    for index, data in df.iterrows():
+        create_conductor(td, data, nodes)
     
 def delete_contactors(td: OpenTDv62.ThermalDesktop):
     contactors = td.GetContactors()
