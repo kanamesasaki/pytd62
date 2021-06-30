@@ -302,21 +302,21 @@ def create_sphere(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     
 def area_surface(surface):
     if isinstance(surface, OpenTDv62.RadCAD.Rectangle):
-        area = area_rectangle(td, data)
+        area = area_rectangle(surface)
     elif isinstance(surface, OpenTDv62.RadCAD.Cylinder):
-        area = area_cylinder(td, data)
+        area = area_cylinder(surface)
     elif isinstance(surface, OpenTDv62.RadCAD.Disk):
-        area = area_disk(td, data)
+        area = area_disk(surface)
     elif isinstance(surface, OpenTDv62.RadCAD.Cone):
-        area = area_cone(td, data)
+        area = area_cone(surface)
     elif isinstance(surface, OpenTDv62.RadCAD.Torus):
-        area = area_torus(td, data)
+        area = area_torus(surface)
     elif isinstance(surface, OpenTDv62.RadCAD.ScarfedCylinder):
-        area = area_scarfedcylinder(td, data)
+        area = area_scarfedcylinder(surface)
     elif isinstance(surface, OpenTDv62.RadCAD.Sphere):
-        area = area_sphere(td, data)
+        area = area_sphere(surface)
     elif isinstance(surface, OpenTDv62.RadCAD.Polygon):
-        area = area_polygon(td, data)
+        area = area_polygon(surface)
     else:
         raise ValueError('unexpected element type')
     return area

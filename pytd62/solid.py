@@ -219,6 +219,28 @@ def create_solidcone(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     solidcone.Comment = str(data['Comment'])
     solidcone.Update()
 
+def volume_solid(solid):
+    if isinstance(surface, OpenTDv62.RadCAD.FdSolid.SolidBrick):
+        area = volume_solidbrick(solid)
+    elif isinstance(surface, OpenTDv62.RadCAD.FdSolid.SolidCylinder):
+        area = volume_solidcylinder(solid)
+    elif isinstance(surface, OpenTDv62.RadCAD.FdSolid.SolidCone):
+        area = volume_solidcone(solid)
+    elif isinstance(surface, OpenTDv62.RadCAD.FdSolid.SolidSphere):
+        area = volume_solidsphere(solid)
+    else:
+        raise ValueError('unexpected element type')
+    return area
+
+def heat_capacity_solid(td, solid):
+    volume = volume_solid(solid)
+    material = td.GetThermoProps(solid.ThermoMaterial)
+    rho = material.Density.GetValueSI()
+    scale = material.DensityMult 
+    cp = material.SpecificHeat.GetValueSI()
+    heat_capacity = volume * rho * scale * cp
+    return heat_capacity
+
 def volume_solidbrick(solidbrick: OpenTDv62.RadCAD.FdSolid.SolidBrick):
     volume = solidbrick.XMax.GetValueSI() * solidbrick.YMax.GetValueSI() * solidbrick.ZMax.GetValueSI()
     return volume
@@ -229,10 +251,17 @@ def volume_solidcylinder(solidcylinder: OpenTDv62.RadCAD.FdSolid.SolidCylinder):
     return volume
 
 def volume_solidcone(solidcone: OpenTDv62.RadCAD.FdSolid.SolidCone):
-    rmax_diff = solidcone.TopRmax - solidcone.BaseRmax
-    rmin_diff = solidcone.TopRmin - solidcone.BaseRmin
-    volume_max = math.pi * solidcone.Height * (rmax_diff**2/3 + solidcone.BaseRmax*rmax_diff + solidcone.BaseRmax**2)
-    volume_min = math.pi * solidcone.Height * (rmin_diff**2/3 + solidcone.BaseRmax*rmin_diff + solidcone.BaseRmin**2)
+    rmax_diff = solidcone.TopRmax.GetValueSI() - solidcone.BaseRmax.GetValueSI()
+    rmin_diff = solidcone.TopRmin.GetValueSI() - solidcone.BaseRmin.GetValueSI()
+    volume_max = math.pi * solidcone.Height.GetValueSI() * (rmax_diff**2/3 + solidcone.BaseRmax.GetValueSI()*rmax_diff + solidcone.BaseRmax.GetValueSI()**2)
+    volume_min = math.pi * solidcone.Height.GetValueSI() * (rmin_diff**2/3 + solidcone.BaseRmax.GetValueSI()*rmin_diff + solidcone.BaseRmin.GetValueSI()**2)
     angle = abs(solidcone.EndAngle.GetValueSI() - solidcone.StartAngle.GetValueSI())
     volume = (volume_max - volume_min) * angle/360
+    return volume
+
+def volume_solidsphere(solidbrick: OpenTDv62.RadCAD.FdSolid.SolidBrick):
+    angle = abs(solidcone.EndAngle.GetValueSI() - solidcone.StartAngle.GetValueSI())
+    bmax_rad = sphere.Bmax*math.pi/180
+    bmin_rad = sphere.Bmin*math.pi/180
+    volume = 2/3*math.pi*(sphere.Rmax**3-sphere.Rmin**3)*(-math.cos(bmax_rad)+math.cos(bmin_rad))
     return volume

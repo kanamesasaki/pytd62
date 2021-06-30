@@ -640,6 +640,7 @@
         <td>unique comment within the submodel for specifying the element</td>
       </tr>
     </table>
+    <img src="images\solidsphere.svg" width="500">
 
     <h2 id="create_solidcone">create_solidcone(td: OpenTDv62.ThermalDesktop, data: pandas.Series)</h2>
     <table border="1">
@@ -839,7 +840,7 @@
     </table>
     <img src="images\solidcone.svg" width="500">
 
-    <h2 id="create_solidcone">volume_solidcone(solidcone: OpenTDv62.RadCAD.FdSolid.SolidCone)</h2>
+    <h2 id="volume_solidcone">volume_solidcone(solidcone: OpenTDv62.RadCAD.FdSolid.SolidCone)</h2>
     <p>This function returns the volume of the given SolidCone element.</p>
     <table border="1">
       <tr>
@@ -873,6 +874,36 @@
     R_\mathrm{base}&: \mathrm{Max~radius~of~the~base~surface} \\
     r_\mathrm{top}&: \mathrm{Min~radius~of~the~top~surface} \\
     r_\mathrm{base}&: \mathrm{Min~radius~of~the~base~surface}
+    \end{align}
+    $$
+
+    <h2 id="volume_solidsphere">volume_solidsphere(solidcone: OpenTDv62.RadCAD.FdSolid.SolidCone)</h2>
+    <p>This function returns the volume of the given SolidCone element.</p>
+    <table border="1">
+      <tr>
+        <th>parameter</th>
+        <th>type</th>
+        <th>description</th>
+      </tr>
+      <tr>
+        <td>solidsphere</th>
+        <td>OpenTDv62.RadCAD.FdSolid.SolidSphere</th>
+        <td>Instance of the SolidSphere element</th>
+      </tr>
+    </table>
+    <p>The volume of a SolidSphere with Start angle = 0&#176; and End angle = 360&#176; can be calculated by</p>
+    $$
+    \begin{align}
+    &\int_{R_\mathrm{min}}^{R_\mathrm{max}} \left(\int_{B_\mathrm{min}}^{B_\mathrm{max}} 2\pi R \sin B \times R dB \right) dR \\
+    &= \frac{2}{3}\pi \left( R_\mathrm{max}^3 - R_\mathrm{max}^3 \right) \left( -\cos B_\mathrm{max} + \cos B_\mathrm{min} \right)
+    \end{align}
+    $$
+    $$
+    \begin{align}
+    R_\mathrm{max}&: \mathrm{Max~radius~of~the~solid~sphere} \\
+    R_\mathrm{min}&: \mathrm{Max~radius~of~the~solid~sphere} \\
+    B_\mathrm{max}&: \mathrm{Max~angle~in~latitudinal~direction},~ 0 \leq B_\mathrm{min} < B_\mathrm{max} \leq \pi \\
+    B_\mathrm{min}&: \mathrm{Min~angle~in~latitudinal~direction},~ 0 \leq B_\mathrm{min} < B_\mathrm{max} \leq \pi 
     \end{align}
     $$
     
