@@ -7,6 +7,7 @@ clr.AddReference("OpenTDv62")
 import OpenTDv62
 clr.AddReference('System')
 from System.Collections.Generic import Dictionary
+from System.Collections.Generic import List
 from pytd62 import common
 
 def surface_analysisgroup(top: str, bottom: str):
@@ -35,6 +36,8 @@ def create_surfaces(td: OpenTDv62.ThermalDesktop, file_name: str):
             create_scarfedcylinder(td, data)
         elif data['Element type'] == 'Sphere':
             create_sphere(td, data)
+        elif data['Element type'] == 'Polygon':
+            create_polygon(td, data)
         else:
             raise ValueError('unexpected element type')
 
@@ -299,6 +302,28 @@ def create_sphere(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     sphere.ColorIndex = data['Color']
     sphere.Comment = str(data['Comment'])
     sphere.Update()
+
+def create_polygon(td: OpenTDv62.ThermalDesktop, data: pd.Series):
+    edges = List[OpenTDv62.Point3d]()
+    edges.Add(OpenTDv62.Point3d(data['X1 [mm]']*0.001, data['Y1 [mm]']*0.001, data['Z1 [mm]']*0.001))
+    edges.Add(OpenTDv62.Point3d(data['X2 [mm]']*0.001, data['Y2 [mm]']*0.001, data['Z2 [mm]']*0.001))
+    edges.Add(OpenTDv62.Point3d(data['X3 [mm]']*0.001, data['Y3 [mm]']*0.001, data['Z3 [mm]']*0.001))
+    if not (math.isnan(data['X4 [mm]']) or math.isnan(data['Y4 [mm]']) or math.isnan(data['Z4 [mm]'])):
+        edges.Add(OpenTDv62.Point3d(data['X4 [mm]']*0.001, data['Y4 [mm]']*0.001, data['Z4 [mm]']*0.001))
+    polygon = td.CreatePolygon(edges)
+    polygon.TopStartSubmodel = OpenTDv62.SubmodelNameData(data['Submodel name'])
+    polygon.TopStartId = data['Start ID']
+    polygon.BreakdownU.Num = 1
+    polygon.BreakdownV.Num = 1
+    polygon.TopOpticalProp = data['Top optical property']
+    polygon.BotOpticalProp = data['Bottom optical property']
+    polygon.TopMaterial = data['Material']
+    polygon.TopThickness = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Thickness [mm]']*0.001)
+    polygon.AnalysisGroups = surface_analysisgroup(data['Top analysis group'], data['Bottom analysis group'])
+    polygon.CondSubmodel = OpenTDv62.SubmodelNameData(data['Submodel name'])
+    polygon.ColorIndex = data['Color']
+    polygon.Comment = str(data['Comment'])
+    polygon.Update()
     
 def area_surface(surface):
     if isinstance(surface, OpenTDv62.RadCAD.Rectangle):
