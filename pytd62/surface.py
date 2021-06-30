@@ -300,6 +300,37 @@ def create_sphere(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     sphere.Comment = str(data['Comment'])
     sphere.Update()
     
+def area_surface(surface):
+    if isinstance(surface, OpenTDv62.RadCAD.Rectangle):
+        area = area_rectangle(td, data)
+    elif isinstance(surface, OpenTDv62.RadCAD.Cylinder):
+        area = area_cylinder(td, data)
+    elif isinstance(surface, OpenTDv62.RadCAD.Disk):
+        area = area_disk(td, data)
+    elif isinstance(surface, OpenTDv62.RadCAD.Cone):
+        area = area_cone(td, data)
+    elif isinstance(surface, OpenTDv62.RadCAD.Torus):
+        area = area_torus(td, data)
+    elif isinstance(surface, OpenTDv62.RadCAD.ScarfedCylinder):
+        area = area_scarfedcylinder(td, data)
+    elif isinstance(surface, OpenTDv62.RadCAD.Sphere):
+        area = area_sphere(td, data)
+    elif isinstance(surface, OpenTDv62.RadCAD.Polygon):
+        area = area_polygon(td, data)
+    else:
+        raise ValueError('unexpected element type')
+    return area
+
+def heat_capacity_surface(td, surface):
+    area = area_surface(surface)
+    volume = area * surface.TopThickness.GetValueSI()
+    material = td.GetThermoProps(surface.TopMaterial)
+    rho = material.Density.GetValueSI()
+    scale = material.DensityMult 
+    cp = material.SpecificHeat.GetValueSI()
+    heat_capacity = volume * rho * scale * cp
+    return heat_capacity
+
 def area_disk(disk: OpenTDv62.RadCAD.Disk):
     angle = abs(disk.EndAngle.GetValueSI() - disk.StartAngle.GetValueSI())
     area = math.pi * (disk.MaxRadius.GetValueSI()**2 - disk.MinRadius.GetValueSI()**2) * angle/360.0
@@ -369,4 +400,11 @@ def area_polygon(polygon: OpenTDv62.RadCAD.Polygon):
         if not math.isclose(np.inner(normal, vectors[i+1]), 0.0, abs_tol=1.0e-6):
             raise ValueError('The vertex is not on the surface')
         area += np.linalg.norm(np.cross(vectors[i], vectors[i+1]), ord=2) * 0.5
+    return area
+
+def area_sphere(sphere: OpenTDv62.RadCAD.Sphere):
+    angle = abs(sphere.EndAngle.GetValueSI() - sphere.StartAngle.GetValueSI())*math.pi/180
+    height = abs(sphere.MaxHeight.GetValueSI() - sphere.MinHeight.GetValueSI())
+    radius = sphere.Radius.GetValueSI()
+    area = angle * height * radius
     return area

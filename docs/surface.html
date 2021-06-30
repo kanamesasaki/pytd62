@@ -1176,6 +1176,35 @@
     \end{align}
     $$
 
+    <h2 id="area_sphere">area_sphere(disk: OpenTDv62.RadCAD.Sphere)</h2>
+    <p>This function returns the area of the given Sphere element.</p>
+    <table border="1">
+      <tr>
+        <th>parameter</th>
+        <th>type</th>
+        <th>description</th>
+      </tr>
+      <tr>
+        <td>disk</th>
+        <td>OpenTDv62.RadCAD.Sphere</th>
+        <td>Instance of the Sphere element</th>
+      </tr>
+    </table>
+    $$
+    \begin{align}
+    \mathrm{area} &= \int_{h_{\mathrm{min}}}^{h_{\mathrm{max}}} 2\pi \sqrt{R^2 - h^2} \times \frac{R dh}{\sqrt{R^2 - h^2}} \times \frac{\theta_\mathrm{end} - \theta_\mathrm{start}}{2\pi} \\
+    &= R (h_\mathrm{max} - h_\mathrm{min}) (\theta_\mathrm{end} - \theta_\mathrm{start})
+    \end{align}
+    $$
+    $$
+    \begin{align}
+    h&: \mathrm{Height~parameter~of~the~sphere} \\
+    R&: \mathrm{Radius~of~the~sphere} \\
+    \theta_\mathrm{start}&: \mathrm{Start~anlge~of~the~sphere~surface,~[rad]} \\
+    \theta_\mathrm{end}&: \mathrm{End~anlge~of~the~sphere~surface,~[rad]}
+    \end{align}
+    $$
+
   </body>
   <footer>
     <a href="index.html">pytd62 documentation</a> &#187;

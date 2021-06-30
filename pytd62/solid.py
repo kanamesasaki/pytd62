@@ -223,7 +223,7 @@ def volume_solidbrick(solidbrick: OpenTDv62.RadCAD.FdSolid.SolidBrick):
     volume = solidbrick.XMax.GetValueSI() * solidbrick.YMax.GetValueSI() * solidbrick.ZMax.GetValueSI()
     return volume
 
-def volume_solidcylinder(solidcylinder: OpenTDv62.RadCAD.FdSolid.SolidSolidcyliner):
+def volume_solidcylinder(solidcylinder: OpenTDv62.RadCAD.FdSolid.SolidCylinder):
     angle = abs(solidcylinder.EndAngle.GetValueSI() - solidcylinder.StartAngle.GetValueSI())
     volume = math.pi * (solidcylinder.Rmax.GetValueSI()**2 - solidcylinder.Rmin.GetValueSI()**2) * angle/360 * solidcylinder.Height.GetValueSI()
     return volume
