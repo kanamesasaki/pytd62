@@ -233,7 +233,7 @@ def volume_solid(solid):
         raise ValueError('unexpected element type')
     return area
 
-def heat_capacity_solid(td, solid):
+def heat_capacity_solid(td: OpenTDv62.ThermalDesktop, solid):
     volume = volume_solid(solid)
     material = td.GetThermoProps(solid.ThermoMaterial)
     rho = material.Density.GetValueSI()
