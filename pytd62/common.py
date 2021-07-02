@@ -269,7 +269,63 @@ def rotate_polygon(td: OpenTDv62.ThermalDesktop, polygon: OpenTDv62.RadCAD.Polyg
     new_polygon.Comment = polygon.Comment
     new_polygon.Update()
     td.DeleteEntity(OpenTDv62.TdDbEntityData(polygon.Handle))
+
+def set_variable_nodetemp(filename: str, td: OpenTDv62.ThermalDesktop, submodel: str, nodeid: int, columnname1: str='Time [s]', columnname2: str='Data [K]'):
+    bc = pd.read_csv(filename)
+    nodes = td.GetNodes()
+    node_list = [inode for inode in nodes if inode.Submodel.Name==submodel and inode.Id==nodeid]
+    if len(node_list) == 1:
+        node = node_list[0]
+    elif len(node_list) == 0:
+        raise ValueError('The requested node does not exist')
+    else:
+        raise ValueError('The given node_id is assigned to multiple nodes')
+
+    addlist_time = List[float]()
+    addlist_temp = List[float]()
+    for itime in bc[columnname1]:
+        addlist_time.Add(itime)
+    for itemp in bc[columnname2]:
+        addlist_temp.Add(itemp)
         
+    timelist = OpenTDv62.Dimension.DimensionalList[OpenTDv62.Dimension.Time]()
+    timelist.AddRange(addlist_time)
+    node.TimeArray = timelist
+    templist = OpenTDv62.Dimension.DimensionalList[OpenTDv62.Dimension.Temp]()
+    templist.AddRange(addlist_temp)
+    node.ValueArray = templist
+    node.SteadyStateBoundaryType = OpenTDv62.RcNodeData.SteadyStateBoundaryTypes.INITIAL_TEMP
+    node.InitialTemp = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Temp](bc[columnname2][0])
+    node.UseVersusTime = 1
+    node.Update()
+
+def set_variable_heatload(filename: str, td: OpenTDv62.ThermalDesktop, submodel: str, comment: str, columnname1: str='Time [s]', columnname2: str='Data [W]'):
+    bc = pd.read_csv(filename)
+    heats = td.GetHeatLoads()
+    heat_list = [iheat for iheat in heats if iheat.Submodel.Name==submodel and iheat.Name==comment]
+    if len(heat_list) == 1:
+        heat = heat_list[0]
+    elif len(heat_list) == 0:
+        raise ValueError('The requested heatload does not exist')
+    else:
+        raise ValueError('The given name is assigned to multiple heatloads')
+        
+    heat.TempVaryType = OpenTDv62.RcHeatLoadData.HeatLoadTypes.LOAD
+    heat.AppliedType = OpenTDv62.RcHeatLoadData.AppliedTypeBoundaryConds.NODE
+    heat.HeatLoadTransientType = OpenTDv62.RcHeatLoadData.HeatLoadTransientTypes.TIME_VARY_HEAT_LOAD
+    heat.TimeDependentSteadyStateType = OpenTDv62.RcHeatLoadData.TimeDependentSteadyStateTypes.TIME_INTERP
+    addlist_time = List[float]()
+    addlist_heat = OpenTDv62.ListSI()
+    for itime in bc[columnname1]:
+        addlist_time.Add(itime)
+    for iheat in bc[columnname2]:
+        addlist_heat.Add(iheat)
+    timelist = OpenTDv62.Dimension.DimensionalList[OpenTDv62.Dimension.Time]()
+    timelist.AddRange(addlist_time)
+    heat.TimeArray = timelist
+    heat.ValueArraySI = addlist_heat
+    heat.Update()
+
 def screenshot(td: OpenTDv62.ThermalDesktop, name: str, view: str='', style: str='XRAY', imageformat: str='png', width: int=0, height: int=0):
     td.SendCommand('CLEANSCREENON ')
     
