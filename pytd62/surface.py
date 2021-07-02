@@ -2,7 +2,8 @@ import math
 import pandas as pd
 import numpy as np
 import sys, clr
-sys.path.append("C:/Windows/Microsoft.NET/assembly/GAC_MSIL/OpenTDv62/ReplaceMe")
+fileobj = open("path.txt", "r", encoding="utf_8")
+sys.path.append(fileobj.readline().strip())
 clr.AddReference("OpenTDv62")
 import OpenTDv62
 clr.AddReference('System')

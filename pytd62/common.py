@@ -2,7 +2,8 @@ import math
 import numpy as np
 import pandas as pd
 import sys, clr
-sys.path.append("C:/Windows/Microsoft.NET/assembly/GAC_MSIL/OpenTDv62/ReplaceMe")
+fileobj = open("path.txt", "r", encoding="utf_8")
+sys.path.append(fileobj.readline().strip())
 clr.AddReference("OpenTDv62")
 import OpenTDv62
 clr.AddReference('System')
@@ -242,7 +243,7 @@ def rotate_element(element, rotate: np.ndarray):
     element.BaseTrans.entry[2][3] = new_origin[2]
     element.Update()
 
-def rotate_polygon(td: OpenTDv62.ThermalDesktop, polygon: OpenTDv62.RadCAD:Polygon, rotate: np.ndarray):
+def rotate_polygon(td: OpenTDv62.ThermalDesktop, polygon: OpenTDv62.RadCAD.Polygon, rotate: np.ndarray):
     """
     The polygon property "Vertices" is not settable. Therefore, it is not possible to move the existing polygon.
     With this function, a new polygon is created at a new position, and the original polygon is deleted.  
