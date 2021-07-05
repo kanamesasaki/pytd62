@@ -205,22 +205,29 @@ def add_optical_property(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     optical.Update()
 
 def rotate_all(td: OpenTDv62.ThermalDesktop, rotate: np.ndarray):
-    disks = td.GetDisks()
-    cylinders = td.GetCylinders()
-    rectangles = td.GetRectangles()
-    cones = td.GetCones()
-    spheres = td.GetSpheres()
-    scarfedcylinders = td.GetScarfedCylinders()
-    toruses = td.GetToruses()
-    solidcylinders = td.GetSolidCylinders()
-    solidbricks = td.GetSolidBricks()
-    solidspheres = td.GetSolidSpheres()
-    polygons = td.GetPolygons()
-    elements = disks + cylinders + rectangles + cones + spheres + scarfedcylinders + toruses + solidcylinders + solidbricks + solidspheres
-    for element in elements:
-        rotate_element(element, rotate)
-    for polygon in polygons:
-        rotate_polygon(td, polygon, rotate)
+    elements = get_elements(td)
+    for key in elements:
+        for elem in elements[key]:
+            if key == 'Polygon':
+                rotate_polygon(elem)
+            else:
+                rotate_element(elem)
+
+def get_elements(td: OpenTDv62.ThermalDesktop):
+    # create empty dictionary object
+    elements = {}
+    elements['Disk'] = td.GetDisks()
+    elements['Cylinder'] = td.GetCylinders()
+    elements['Rectangle'] = td.GetRectangles()
+    elements['Cone'] = td.GetCones()
+    elements['Sphere'] = td.GetSpheres()
+    elements['Torus'] = td.GetToruses()
+    elements['ScarfedCylinder'] = td.GetScarfedCylinders()
+    elements['Polygon'] = td.GetPolygons()
+    elements['SolidCylinder'] = td.GetSolidCylinders()
+    elements['SolidBrick'] = td.GetSolidBricks()
+    elements['SolidSphere'] = td.GetSolidSpheres()
+    return elements
 
 def rotate_element(element, rotate: np.ndarray):
     base = np.array([[element.BaseTrans.entry[0][0], element.BaseTrans.entry[0][1], element.BaseTrans.entry[0][2]],
@@ -269,6 +276,82 @@ def rotate_polygon(td: OpenTDv62.ThermalDesktop, polygon: OpenTDv62.RadCAD.Polyg
     new_polygon.Comment = polygon.Comment
     new_polygon.Update()
     td.DeleteEntity(OpenTDv62.TdDbEntityData(polygon.Handle))
+
+def issurface(element):
+    if isinstance(element, OpenTDv62.RadCAD.Disk):
+        flag = True
+    elif isinstance(element, OpenTDv62.RadCAD.Cylinder):
+        flag = True
+    elif isinstance(element, OpenTDv62.RadCAD.Rectangle):
+        flag = True
+    elif isinstance(element, OpenTDv62.RadCAD.Cone):
+        flag = True
+    elif isinstance(element, OpenTDv62.RadCAD.Sphere):
+        flag = True
+    elif isinstance(element, OpenTDv62.RadCAD.Torus):
+        flag = True
+    elif isinstance(element, OpenTDv62.RadCAD.ScarfedCylinder):
+        flag = True
+    elif isinstance(element, OpenTDv62.RadCAD.Polygon):
+        flag = True
+    else:
+        flag = False
+    return flag
+
+def issolid(element):
+    if isinstance(element, OpenTDv62.RadCAD.FdSolid.SolidCylinder):
+        flag = True
+    elif isinstance(element, OpenTDv62.RadCAD.FdSolid.SolidBrick):
+        flag = True
+    elif isinstance(element, OpenTDv62.RadCAD.FdSolid.SolidSphere):
+        flag = True
+    else:
+        flag = False
+    return flag
+
+def get_element(td: OpenTDv62.ThermalDesktop, submodel_name: str, element_type: str, comment: str, elements: dict={}):
+    if elements == {}:
+        elements = get_elements(td)
+    if element_type in ['Disk', 'Cylinder', 'Rectangle', 'Cone', 'Sphere', 'Torus', 'ScarfedCylinder', 'Polygon']:
+        element = [ielement for ielement in elements[element_type] if submodel_name == ielement.TopStartSubmodel.Name and comment == ielement.Comment]
+    elif element_type in ['SolidCylinder', 'SolidBrick', 'SolidSphere']:
+        element = [ielement for ielement in elements[element_type] if submodel_name == ielement.StartSubmodel.Name and comment == ielement.Comment]
+    else:
+        raise ValueError('Unexpected element type')
+    num = len(element)
+    if num == 1:
+        return element[0]
+    elif num == 0:
+        raise ValueError('the requested element does not exist')
+    else:
+        raise ValueError('multiple elements are found with the same designation')
+
+def create_contactors(td: OpenTDv62.ThermalDesktop, file_name: str):
+    df = pd.read_csv(file_name)
+    for index, data in df.iterrows():
+        create_contactor(td, data)
+
+def create_contactor(td: OpenTDv62.ThermalDesktop, data: pd.Series):
+    elements = get_elements(td)
+    contfrom = List[OpenTDv62.Connection]()
+    contfrom.Add(OpenTDv62.Connection(get_element(td, data['From Submodel'], data['From Element'], str(data['From Comment']), elements), data['Marker'])) # Marker BIN 0010 -> DEC 2
+    contto = List[OpenTDv62.Connection]()
+    contto.Add(OpenTDv62.Connection(get_element(td, data['To Submodel'], data['To Element'], str(data['To Comment']), elements)))
+    cont = td.CreateContactor(contfrom, contto)
+    cont.ContactCond = data['Conductance [W/K]'] # [W/K]
+    if data['UseFace'] == 'Face':
+        cont.UseFace = 1 # 1:Face 
+    elif data['UseFace'] == 'Edges':
+        cont.UseFace = 0 # 0:Edges
+    cont.CondSubmodel = OpenTDv62.SubmodelNameData(data['From Submodel'])
+    if data['InputValueType'] == 'PER_AREA_OR_LENGTH':
+        cont.InputValueType = OpenTDv62.RcConnData.ContactorInputValueTypes.PER_AREA_OR_LENGTH
+    elif data['InputValueType'] == 'ABSOLUTE_COND_REDUCED_BY_UNCONNECTED':
+        cont.InputValueType = OpenTDv62.RcConnData.ContactorInputValueTypes.ABSOLUTE_COND_REDUCED_BY_UNCONNECTED
+    elif data['InputValueType'] == 'ABSOLUTE_ADJUST_FOR_UNCONNECTED':
+        cont.InputValueType = OpenTDv62.RcConnData.ContactorInputValueTypes.ABSOLUTE_ADJUST_FOR_UNCONNECTED
+    cont.Name = str(data['Name'])
+    cont.Update()
 
 def set_variable_nodetemp(filename: str, td: OpenTDv62.ThermalDesktop, submodel: str, nodeid: int, columnname1: str='Time [s]', columnname2: str='Data [K]'):
     bc = pd.read_csv(filename)

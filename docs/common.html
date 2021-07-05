@@ -282,6 +282,153 @@
       </tr>
     </table>
 
+    <h2 id="create_contactor">create_contactor(td: OpenTDv62.ThermalDesktop)</h2>
+    <table border="1">
+      <tr>
+        <th colspan="2">Rectangle</th>
+        <th colspan="2">Disk</th>
+        <th colspan="2">Cylinder</th>
+        <th colspan="2">Cone</th>
+        <th colspan="2">Torus</th>
+        <th colspan="2">ScarfedCylinder</th>
+        <th colspan="2">Sphere</th>
+        <th colspan="2">Polygon</th>
+      </tr>
+      <tr>
+        <th>0: Edges</th>
+        <th>1: Face</th>
+        <th>0: Edges</th>
+        <th>1: Face</th>
+        <th>0: Edges</th>
+        <th>1: Face</th>
+        <th>0: Edges</th>
+        <th>1: Face</th>
+        <th>0: Edges</th>
+        <th>1: Face</th>
+        <th>0: Edges</th>
+        <th>1: Face</th>
+        <th>0: Edges</th>
+        <th>1: Face</th>
+        <th>0: Edges</th>
+        <th>1: Face</th>
+      </tr>
+      <tr>
+        <td>Along Y at X=0</td>
+        <td>Top</td>
+        <td>Not Used</td>
+        <td>Top</td>
+        <td>Start Angle</td>
+        <td>Out</td>
+        <td>Start Angle</td>
+        <td>Out</td>
+        <td>Start Angle Large</td>
+        <td>Out</td>
+        <td>Start Angle</td>
+        <td>Out</td>
+        <td>Start Angle</td>
+        <td>Out</td>
+        <td>Edge 0</td>
+        <td>Top</td>
+      </tr>
+      <tr>
+        <td>Along X at Ymax</td>
+        <td>Bottom</td>
+        <td>Max Radius</td>
+        <td>Bottom</td>
+        <td>Max Height</td>
+        <td>In</td>
+        <td>Max Height</td>
+        <td>In</td>
+        <td>Start Angle Small</td>
+        <td>In</td>
+        <td>Max Height</td>
+        <td>In</td>
+        <td>Max Height</td>
+        <td>In</td>
+        <td>Edge 1</td>
+        <td>In</td>
+      </tr>
+      <tr>
+        <td>Along Y at Xmax</td>
+        <td></td>
+        <td>Not Used</td>
+        <td></td>
+        <td>End Angle</td>
+        <td></td>
+        <td>End Angle</td>
+        <td></td>
+        <td>End Angle Large</td>
+        <td></td>
+        <td>End Angle</td>
+        <td></td>
+        <td>End Angle</td>
+        <td></td>
+        <td>Edge 2</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Along X at Y=0</td>
+        <td></td>
+        <td>Min Radius</td>
+        <td></td>
+        <td>Base</td>
+        <td></td>
+        <td>Base</td>
+        <td></td>
+        <td>End Angle Small</td>
+        <td></td>
+        <td>Base</td>
+        <td></td>
+        <td>Min Height</td>
+        <td></td>
+        <td>Edge 3</td>
+        <td></td>
+      </tr>
+    </table>
+    <br>
+    <table border="1">
+      <tr>
+        <th>SolidBrick</th>
+        <th>SolidCylinder</th>
+        <th>SolidSphere</th>
+      </tr>
+      <tr>
+        <th>1: Face</th>
+        <th>1: Face</th>
+        <th>1: Face</th>
+      </tr>
+      <tr>
+        <td>XMIN</td>
+        <td>GMIN</td>
+        <td>GMIN</td>
+      </tr>
+      <tr>
+        <td>XMAX</td>
+        <td>GMAX</td>
+        <td>GMAX</td>
+      </tr>
+      <tr>
+        <td>YMIN</td>
+        <td>RMIN</td>
+        <td>RMIN</td>
+      </tr>
+      <tr>
+        <td>YMAX</td>
+        <td>RMAX</td>
+        <td>RMAX</td>
+      </tr>
+      <tr>
+        <td>ZMIN</td>
+        <td>HMIN</td>
+        <td>BMIN</td>
+      </tr>
+      <tr>
+        <td>ZMAX</td>
+        <td>HMAX</td>
+        <td>BMAX</td>
+      </tr>
+    </table>
+
     <h2 id="screenshot">screenshot(td: OpenTDv62.ThermalDesktop, name: str, view: str='', style: str='XRAY', imageformat: str='png', width: int=0, height: int=0)</h2>
     <p>With this function, a screenshot can be taken with the specified perspective, style, image format, and size.</p>
     <table border="1">
