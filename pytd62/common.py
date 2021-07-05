@@ -334,16 +334,41 @@ def create_contactors(td: OpenTDv62.ThermalDesktop, file_name: str):
 def create_contactor(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     elements = get_elements(td)
     contfrom = List[OpenTDv62.Connection]()
-    contfrom.Add(OpenTDv62.Connection(get_element(td, data['From Submodel'], data['From Element'], str(data['From Comment']), elements), data['Marker'])) # Marker BIN 0010 -> DEC 2
+    contfrom.Add(OpenTDv62.Connection(get_element(td, data['FromSubmodel'], data['FromElement'], str(data['FromComment']), elements), int(data['Marker'])))
+    i = int(1)
+    while True:
+        try:
+            submodel = str(data[f'FromSubmodel.{i}'])
+            element = str(data[f'FromElement.{i}'])
+            comment = str(data[f'FromComment.{i}'])
+            marker = int(data[f'Marker.{i}'])
+            if submodel=='nan' or element=='nan' or comment=='nan': raise ValueError
+        except:
+            break
+        else:
+            contfrom.Add(OpenTDv62.Connection(get_element(td, submodel, element, comment, elements), marker))
+            i = i + 1
     contto = List[OpenTDv62.Connection]()
-    contto.Add(OpenTDv62.Connection(get_element(td, data['To Submodel'], data['To Element'], str(data['To Comment']), elements)))
+    contto.Add(OpenTDv62.Connection(get_element(td, data['ToSubmodel'], data['ToElement'], str(data['ToComment']), elements)))
+    j = int(1)
+    while True:
+        try:
+            submodel = str(data[f'ToSubmodel.{j}'])
+            element = str(data[f'ToElement.{j}'])
+            comment = str(data[f'ToComment.{j}'])
+            if submodel=='nan' or element=='nan' or comment=='nan': raise ValueError
+        except:
+            break
+        else:
+            contto.Add(OpenTDv62.Connection(get_element(td, submodel, element, comment, elements)))
+            j = j + 1
     cont = td.CreateContactor(contfrom, contto)
     cont.ContactCond = data['Conductance [W/K]'] # [W/K]
     if data['UseFace'] == 'Face':
         cont.UseFace = 1 # 1:Face 
     elif data['UseFace'] == 'Edges':
         cont.UseFace = 0 # 0:Edges
-    cont.CondSubmodel = OpenTDv62.SubmodelNameData(data['From Submodel'])
+    cont.CondSubmodel = OpenTDv62.SubmodelNameData(data['FromSubmodel'])
     if data['InputValueType'] == 'PER_AREA_OR_LENGTH':
         cont.InputValueType = OpenTDv62.RcConnData.ContactorInputValueTypes.PER_AREA_OR_LENGTH
     elif data['InputValueType'] == 'ABSOLUTE_COND_REDUCED_BY_UNCONNECTED':
