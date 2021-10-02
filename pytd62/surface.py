@@ -39,6 +39,10 @@ def create_surfaces(td: OpenTDv62.ThermalDesktop, file_name: str):
             create_sphere(td, data)
         elif data['Element type'] == 'Polygon':
             create_polygon(td, data)
+        elif data['Element type'] == 'LinearTri':
+            create_lineartri(td, data)
+        elif data['Element type'] == 'LinearQuad':
+            create_linearquad(td, data)
         else:
             raise ValueError('unexpected element type')
 
@@ -326,6 +330,120 @@ def create_polygon(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     polygon.Comment = str(data['Comment'])
     polygon.Update()
     
+def create_lineartri(td: OpenTDv62.ThermalDesktop, data: pd.Series):
+    feMesh = OpenTDv62.RadCAD.FEModel.FEMesh()
+    node_list = List[OpenTDv62.RadCAD.FEModel.Node]()
+    element_list = List[OpenTDv62.RadCAD.FEModel.SurfaceElement]()
+    element = OpenTDv62.RadCAD.FEModel.SurfaceElement()
+    edge = List[int]()
+    node = OpenTDv62.RadCAD.FEModel.Node()
+    node.x = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['X1 [mm]']*0.001)
+    node.y = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Y1 [mm]']*0.001)
+    node.z = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Z1 [mm]']*0.001)
+    node.submodel = data['Submodel name']
+    node.id = 1
+    node_list.Add(node)
+    edge.Add(1)
+    node = OpenTDv62.RadCAD.FEModel.Node()
+    node.x = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['X2 [mm]']*0.001)
+    node.y = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Y2 [mm]']*0.001)
+    node.z = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Z2 [mm]']*0.001)
+    node.submodel = data['Submodel name']
+    node.id = 2
+    node_list.Add(node)
+    edge.Add(2)
+    node = OpenTDv62.RadCAD.FEModel.Node()
+    node.x = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['X3 [mm]']*0.001)
+    node.y = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Y3 [mm]']*0.001)
+    node.z = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Z3 [mm]']*0.001)
+    node.submodel = data['Submodel name']
+    node.id = 3
+    node_list.Add(node)
+    edge.Add(3)
+    element.nodeIds = edge
+    element.numNodes = 3
+    element.submodel = data['Submodel name']
+    element.material = data['Material']
+    element.optic_a = data['Top optical property']
+    element.optic_b = data['Bottom optical property']
+    element.thickness = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Thickness [mm]']*0.001)
+    element.id = data['Start ID']
+    element_list.Add(element)
+    feMesh.nodes = node_list
+    feMesh.surfaceElements = element_list
+    name = data['Submodel name'] + '.' +str(element.id)
+    useUCS = False
+    meshImporter = td.CreateFEMeshImporter(name, useUCS)
+    meshImporter.SetMesh(feMesh)
+    
+    alltris = td.GetLinearTris()
+    tri_list = [tri for tri in alltris if tri.CondSubmodel.Name==data['Submodel name'] and tri.Comment=='ID: '+str(data['Start ID'])]
+    if len(tri_list) == 1:
+        # tri_list[0].ColorIndex = int(data['Color'])
+        tri_list[0].AnalysisGroups = surface_analysisgroup(data['Top analysis group'], data['Bottom analysis group'])
+        tri_list[0].Update()
+        
+def create_linearquad(td: OpenTDv62.ThermalDesktop, data: pd.Series):
+    feMesh = OpenTDv62.RadCAD.FEModel.FEMesh()
+    node_list = List[OpenTDv62.RadCAD.FEModel.Node]()
+    element_list = List[OpenTDv62.RadCAD.FEModel.SurfaceElement]()
+    element = OpenTDv62.RadCAD.FEModel.SurfaceElement()
+    edge = List[int]()
+    node = OpenTDv62.RadCAD.FEModel.Node()
+    node.x = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['X1 [mm]']*0.001)
+    node.y = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Y1 [mm]']*0.001)
+    node.z = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Z1 [mm]']*0.001)
+    node.submodel = data['Submodel name']
+    node.id = 1
+    node_list.Add(node)
+    edge.Add(1)
+    node = OpenTDv62.RadCAD.FEModel.Node()
+    node.x = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['X2 [mm]']*0.001)
+    node.y = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Y2 [mm]']*0.001)
+    node.z = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Z2 [mm]']*0.001)
+    node.submodel = data['Submodel name']
+    node.id = 2
+    node_list.Add(node)
+    edge.Add(2)
+    node = OpenTDv62.RadCAD.FEModel.Node()
+    node.x = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['X3 [mm]']*0.001)
+    node.y = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Y3 [mm]']*0.001)
+    node.z = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Z3 [mm]']*0.001)
+    node.submodel = data['Submodel name']
+    node.id = 3
+    node_list.Add(node)
+    edge.Add(3)
+    node = OpenTDv62.RadCAD.FEModel.Node()
+    node.x = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['X4 [mm]']*0.001)
+    node.y = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Y4 [mm]']*0.001)
+    node.z = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Z4 [mm]']*0.001)
+    node.submodel = data['Submodel name']
+    node.id = 4
+    node_list.Add(node)
+    edge.Add(4)
+    element.nodeIds = edge
+    element.numNodes = 4
+    element.submodel = data['Submodel name']
+    element.material = data['Material']
+    element.optic_a = data['Top optical property']
+    element.optic_b = data['Bottom optical property']
+    element.thickness = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Thickness [mm]']*0.001)
+    element.id = data['Start ID']
+    element_list.Add(element)
+    feMesh.nodes = node_list
+    feMesh.surfaceElements = element_list
+    name = data['Submodel name'] + '.' +str(element.id)
+    useUCS = False
+    meshImporter = td.CreateFEMeshImporter(name, useUCS)
+    meshImporter.SetMesh(feMesh)
+    
+    allquad = td.GetLinearQuads()
+    quad_list = [quad for quad in allquad if quad.CondSubmodel.Name==data['Submodel name'] and quad.Comment=='ID: '+str(data['Start ID'])]
+    if len(quad_list) == 1:
+        # quad_list[0].ColorIndex = int(data['Color'])
+        quad_list[0].AnalysisGroups = surface_analysisgroup(data['Top analysis group'], data['Bottom analysis group'])
+        quad_list[0].Update()
+        
 def area_surface(surface):
     if isinstance(surface, OpenTDv62.RadCAD.Rectangle):
         area = area_rectangle(surface)
