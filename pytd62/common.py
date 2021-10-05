@@ -93,13 +93,21 @@ def renumber_submodel_nodes(td: OpenTDv62.ThermalDesktop, submodel_name: str):
         inode.Id = i+1
         inode.Update()
         
-def merge_submodel_nodes(td: OpenTDv62.ThermalDesktop, submodel_name: str, tolerance: float=0.1e-3):
+def merge_submodel_nodes(td: OpenTDv62.ThermalDesktop, submodel_name: str, tolerance: float=0.1e-3, node_nums: list=[]):
     merge = OpenTDv62.MergeNodesOptionsData()
-    merge.KeepMethod = OpenTDv62.MergeNodesOptionsData.KeepMethods.SMALLEST_NODE_ID
+    merge.KeepMethod = OpenTDv62.MergeNodesOptionsData.KeepMethods.FIRST_SELECTED
     nodes = List[str]()
     submodel_nodes = get_submodel_nodes(td, submodel_name)
-    for node in submodel_nodes:
-        nodes.Add(node.Handle)
+    if node_nums == []:
+        for node in submodel_nodes:
+            nodes.Add(node.Handle)
+    else:
+        for num in node_nums:
+            node_extract = [inode for inode in submodel_nodes if num == inode.Id]
+            if len(node_extract) == 1:
+                nodes.Add(node_extract[0].Handle)
+            else:
+                raise ValueError('The given nodeID does not exist or assigned to multiple nodes')
     merge.NodeHandles = nodes
     merge.Tolerance = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](tolerance)
     td.MergeNodes(merge)

@@ -44,7 +44,7 @@ def create_solidbrick(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     solidbrick = td.CreateSolidBrick()
     solidbrick.StartSubmodel = OpenTDv62.SubmodelNameData(data['Submodel name'])
     solidbrick.CondSubmodel = OpenTDv62.SubmodelNameData(data['Submodel name'])
-    solidbrick.StartId = 1
+    solidbrick.StartId = data['Start ID']
     solidbrick.XMax = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Xmax [mm]']*0.001)
     solidbrick.YMax = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Ymax [mm]']*0.001)
     solidbrick.ZMax = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Zmax [mm]']*0.001)
@@ -87,7 +87,7 @@ def create_solidcylinder(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     solidcylinder = td.CreateSolidCylinder()
     solidcylinder.StartSubmodel = OpenTDv62.SubmodelNameData(data['Submodel name'])
     solidcylinder.CondSubmodel = OpenTDv62.SubmodelNameData(data['Submodel name'])
-    solidcylinder.StartId = 1
+    solidcylinder.StartId = data['Start ID']
     solidcylinder.Rmax = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Rmax [mm]']*0.001)
     solidcylinder.Rmin = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Rmin [mm]']*0.001)
     solidcylinder.Height = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Height [mm]']*0.001)
@@ -132,7 +132,7 @@ def create_solidsphere(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     solidsphere = td.CreateSolidSphere()
     solidsphere.StartSubmodel = OpenTDv62.SubmodelNameData(data['Submodel name'])
     solidsphere.CondSubmodel = OpenTDv62.SubmodelNameData(data['Submodel name'])
-    solidsphere.StartId = 1
+    solidsphere.StartId = data['Start ID']
     solidsphere.Rmax = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Rmax [mm]']*0.001)
     solidsphere.Rmin = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Rmin [mm]']*0.001)
     solidsphere.StartAngle = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.Angle](data['Start angle [deg]']*1.0)
@@ -178,7 +178,7 @@ def create_solidcone(td: OpenTDv62.ThermalDesktop, data: pd.Series):
     solidcone = td.CreateSolidCone()
     solidcone.StartSubmodel = OpenTDv62.SubmodelNameData(data['Submodel name'])
     solidcone.CondSubmodel = OpenTDv62.SubmodelNameData(data['Submodel name'])
-    solidcone.StartId = 1
+    solidcone.StartId = data['Start ID']
     solidcone.BaseRmax = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Base Rmax [mm]']*0.001)
     solidcone.BaseRmin = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Base Rmin [mm]']*0.001)
     solidcone.TopRmax = OpenTDv62.Dimension.Dimensional[OpenTDv62.Dimension.ModelLength](data['Top Rmax [mm]']*0.001)
