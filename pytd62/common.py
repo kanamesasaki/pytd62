@@ -217,9 +217,13 @@ def rotate_all(td: OpenTDv62.ThermalDesktop, rotate: np.ndarray):
     for key in elements:
         for elem in elements[key]:
             if key == 'Polygon':
-                rotate_polygon(elem)
+                rotate_polygon(td, elem, rotate)
+            elif key == 'LinearTri':
+                rotate_lineartri(td, elem, rotate)
+            elif key == 'LinearQuad':
+                rotate_linearquad(td, elem, rotate)
             else:
-                rotate_element(elem)
+                rotate_element(elem, rotate)
 
 def get_elements(td: OpenTDv62.ThermalDesktop):
     # create empty dictionary object
@@ -232,6 +236,8 @@ def get_elements(td: OpenTDv62.ThermalDesktop):
     elements['Torus'] = td.GetToruses()
     elements['ScarfedCylinder'] = td.GetScarfedCylinders()
     elements['Polygon'] = td.GetPolygons()
+    elements['LinearTri'] = td.GetLinearTris()
+    elements['LinearQuad'] = td.GetLinearQuads()
     elements['SolidCylinder'] = td.GetSolidCylinders()
     elements['SolidBrick'] = td.GetSolidBricks()
     elements['SolidSphere'] = td.GetSolidSpheres()
@@ -257,6 +263,26 @@ def rotate_element(element, rotate: np.ndarray):
     element.BaseTrans.entry[1][3] = new_origin[1]
     element.BaseTrans.entry[2][3] = new_origin[2]
     element.Update()
+
+def rotate_lineartri(td: OpenTDv62.ThermalDesktop, fe: OpenTDv62.RadCAD.FEM.LinearTri, rotate: np.ndarray):
+    node_handles = fe.AttachedNodeHandles
+    for handle in node_handles:
+        node = td.GetNode(handle)
+        orig = node.Origin
+        point = np.array([orig.X.GetValueSI(),orig.Y.GetValueSI(),orig.Z.GetValueSI()])
+        new_point = rotate @ point
+        node.Origin = OpenTDv62.Point3d(new_point[0], new_point[1], new_point[2])
+        node.Update()
+        
+def rotate_linearquad(td: OpenTDv62.ThermalDesktop, fe: OpenTDv62.RadCAD.FEM.LinearQuad, rotate: np.ndarray):
+    node_handles = fe.AttachedNodeHandles
+    for handle in node_handles:
+        node = td.GetNode(handle)
+        orig = node.Origin
+        point = np.array([orig.X.GetValueSI(),orig.Y.GetValueSI(),orig.Z.GetValueSI()])
+        new_point = rotate @ point
+        node.Origin = OpenTDv62.Point3d(new_point[0], new_point[1], new_point[2])
+        node.Update()
 
 def rotate_polygon(td: OpenTDv62.ThermalDesktop, polygon: OpenTDv62.RadCAD.Polygon, rotate: np.ndarray):
     """
