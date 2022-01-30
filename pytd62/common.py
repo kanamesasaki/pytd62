@@ -224,6 +224,19 @@ def rotate_all(td: OpenTDv62.ThermalDesktop, rotate: np.ndarray):
                 rotate_linearquad(td, elem, rotate)
             else:
                 rotate_element(elem, rotate)
+                
+def translate_all(td: OpenTDv62.ThermalDesktop, x: float=0.0, y: float=0.0, z: float=0.0):
+    elements = get_elements(td)
+    for key in elements:
+        for elem in elements[key]:
+            if key == 'Polygon':
+                translate_polygon(td, elem, x, y, z)
+            elif key == 'LinearTri':
+                translate_lineartri(td, elem, x, y, z)
+            elif key == 'LinearQuad':
+                translate_linearquad(td, elem, x, y, z)
+            else:
+                translate_element(elem, x, y, z)
 
 def get_elements(td: OpenTDv62.ThermalDesktop):
     # create empty dictionary object
@@ -263,6 +276,12 @@ def rotate_element(element, rotate: np.ndarray):
     element.BaseTrans.entry[1][3] = new_origin[1]
     element.BaseTrans.entry[2][3] = new_origin[2]
     element.Update()
+    
+def translate_element(element, x: float=0.0, y: float=0.0, z: float=0.0):
+    element.BaseTrans.entry[0][3] += x
+    element.BaseTrans.entry[1][3] += y
+    element.BaseTrans.entry[2][3] += z
+    element.Update()
 
 def rotate_lineartri(td: OpenTDv62.ThermalDesktop, fe: OpenTDv62.RadCAD.FEM.LinearTri, rotate: np.ndarray):
     node_handles = fe.AttachedNodeHandles
@@ -274,6 +293,15 @@ def rotate_lineartri(td: OpenTDv62.ThermalDesktop, fe: OpenTDv62.RadCAD.FEM.Line
         node.Origin = OpenTDv62.Point3d(new_point[0], new_point[1], new_point[2])
         node.Update()
         
+def translate_lineartri(td: OpenTDv62.ThermalDesktop, fe: OpenTDv62.RadCAD.FEM.LinearTri, x: float=0.0, y: float=0.0, z: float=0.0):
+    node_handles = fe.AttachedNodeHandles
+    for handle in node_handles:
+        node = td.GetNode(handle)
+        orig = node.Origin
+        point = np.array([orig.X.GetValueSI(),orig.Y.GetValueSI(),orig.Z.GetValueSI()])
+        node.Origin = OpenTDv62.Point3d(point[0]+x, point[1]+y, point[2]+z)
+        node.Update()
+        
 def rotate_linearquad(td: OpenTDv62.ThermalDesktop, fe: OpenTDv62.RadCAD.FEM.LinearQuad, rotate: np.ndarray):
     node_handles = fe.AttachedNodeHandles
     for handle in node_handles:
@@ -283,6 +311,15 @@ def rotate_linearquad(td: OpenTDv62.ThermalDesktop, fe: OpenTDv62.RadCAD.FEM.Lin
         new_point = rotate @ point
         node.Origin = OpenTDv62.Point3d(new_point[0], new_point[1], new_point[2])
         node.Update()
+        
+def translate_linearquad(td: OpenTDv62.ThermalDesktop, fe: OpenTDv62.RadCAD.FEM.LinearQuad, x: float=0.0, y: float=0.0, z: float=0.0):
+    node_handles = fe.AttachedNodeHandles
+    for handle in node_handles:
+        node = td.GetNode(handle)
+        orig = node.Origin
+        point = np.array([orig.X.GetValueSI(),orig.Y.GetValueSI(),orig.Z.GetValueSI()])
+        node.Origin = OpenTDv62.Point3d(point[0]+x, point[1]+y, point[2]+z)
+        node.Update()  
 
 def rotate_polygon(td: OpenTDv62.ThermalDesktop, polygon: OpenTDv62.RadCAD.Polygon, rotate: np.ndarray):
     """
@@ -295,6 +332,32 @@ def rotate_polygon(td: OpenTDv62.ThermalDesktop, polygon: OpenTDv62.RadCAD.Polyg
         point = np.array([poly.X.GetValueSI(),poly.Y.GetValueSI(),poly.Z.GetValueSI()])
         new_point = rotate @ point
         new_edges.Add(OpenTDv62.Point3d(new_point[0], new_point[1], new_point[2]))
+    new_polygon = td.CreatePolygon(new_edges)
+    new_polygon.TopStartSubmodel = polygon.TopStartSubmodel
+    new_polygon.TopStartId = polygon.TopStartId
+    new_polygon.BreakdownU.Num = polygon.BreakdownU.Num
+    new_polygon.BreakdownV.Num = polygon.BreakdownV.Num
+    new_polygon.TopOpticalProp = polygon.TopOpticalProp
+    new_polygon.BotOpticalProp = polygon.BotOpticalProp
+    new_polygon.TopMaterial = polygon.TopMaterial
+    new_polygon.TopThickness = polygon.TopThickness
+    new_polygon.AnalysisGroups = polygon.AnalysisGroups
+    new_polygon.CondSubmodel = polygon.CondSubmodel
+    new_polygon.ColorIndex = polygon.ColorIndex
+    new_polygon.Comment = polygon.Comment
+    new_polygon.Update()
+    td.DeleteEntity(OpenTDv62.TdDbEntityData(polygon.Handle))
+    
+def translate_polygon(td: OpenTDv62.ThermalDesktop, polygon: OpenTDv62.RadCAD.Polygon, x: float=0.0, y: float=0.0, z: float=0.0):
+    """
+    The polygon property "Vertices" is not settable. Therefore, it is not possible to move the existing polygon.
+    With this function, a new polygon is created at a new position, and the original polygon is deleted.  
+    """
+    new_edges = List[OpenTDv62.Point3d]()
+    for i in range(len(polygon.Vertices)//2):
+        poly = polygon.Vertices[i]
+        point = np.array([poly.X.GetValueSI(),poly.Y.GetValueSI(),poly.Z.GetValueSI()])
+        new_edges.Add(OpenTDv62.Point3d(point[0]+x, point[1]+y, point[2]+z))
     new_polygon = td.CreatePolygon(new_edges)
     new_polygon.TopStartSubmodel = polygon.TopStartSubmodel
     new_polygon.TopStartId = polygon.TopStartId
